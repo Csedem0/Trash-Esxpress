@@ -20,13 +20,22 @@ from django.views.generic import RedirectView
 #from django.conf import settings
 #from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.contrib.auth import views as auth_views
+from accounts.forms import ParentLoginForm
 
 urlpatterns = [
+    # Redirect root URL to the 'accounts/' app
     path('', RedirectView.as_view(url='/accounts/', permanent=False)),
+    
+    # Django Admin URL
     path('admin/', admin.site.urls),
+    
+    # Include URLs from the 'accounts' app
     path('accounts/', include('accounts.urls')),
-   
+    
+    # Login and Logout views using Django's auth views
 ]
+
 
 urlpatterns += staticfiles_urlpatterns()
 #urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
