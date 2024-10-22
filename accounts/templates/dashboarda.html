@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    {% load static %}
+
+    <link rel="icon" href="{% static 'trash express img.png' %}">
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+     <!-- Smartsupp Live Chat script -->
+<script type="text/javascript">
+    var _smartsupp = _smartsupp || {};
+    _smartsupp.key = '03edfc5135ecf17096232e9123deac29cc743131';
+    window.smartsupp||(function(d) {
+      var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+      s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+      c.type='text/javascript';c.charset='utf-8';c.async=true;
+      c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+    })(document);
+    </script>
+    <noscript> Powered by <a href=“https://www.smartsupp.com” target=“_blank”>Smartsupp</a></noscript>
+</head>
+<body>
+      <!--Header section-->
+  <header>
+    <nav>
+      <div class="div1">
+        <img class="logo-image" src="{% static 'trash express img.png' %}" alt="Trash express logo">
+        <h1 class="h11">Trash Express</h1>
+      </div>
+
+      <ul class="ul1">
+        <li class="li1"><a class="a1" href="{% url 'home' %}">Home</a></li>
+        <li class="li1"><a class="a1" href="{% url 'about' %}">About Us</a></li>
+        <li class="li1"><a class="a1" href="{% url 'services' %}">Services</a></li>
+        <li class="li1"><a class="a1" href="{% url 'contact' %}">Contact Us</a></li>
+      </ul>
+        <a href="{% url 'logout' %}"><button class="btn">Logout</button></a>
+
+       <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+       </div>
+    </nav>
+  </header>
+
+  <div class="dropdown-menu">
+    <li class="li2"><a class="dropclass" href="{% url 'home' %}">Home</a></li>
+    <li class="li2"><a class="dropclass" href="{% url 'about' %}">About Us</a></li>
+    <li class="li2"><a class="dropclass" href="{% url 'services' %}">Services</a></li>
+    <li class="li2"><a class="dropclass" href="{% url 'contact' %}">Contact Us</a></li>
+    <li class="li2"><a class="dropclass" href="{% url 'logout' %}">Logout</a></li>
+  </div>
+
+   <!--services-section-->
+   <div class="services-colour">
+    <div class="services-section">
+      <div class="services-h1">
+        <h4 class="h41"></h4>
+        <h1 class="h12">Welcome, {{ request.user.username }}!😊</h1>
+
+      </div>
+      <div id="myLinks" div class="services-div">
+        <div class="service1">
+          <div class="box-container">
+            <img class="img4" src="{% static 'Group 625997.svg' %}" alt="citizens png">
+            <h2 class="first-h3">Your Subscriptions</h2>
+            {% for subscription in user_subscriptions %}
+            <h3 class="p2">{{ subscription.plan.name }} Plan</h3>
+            <p class="p2">Start Date - {{ subscription.start_date }}</p>
+            
+            <p class="p2">End Date - {{ subscription.end_date }}</p>
+            <p style="color: transparent;">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda, earum? Voluptates inventore laudantium .</p>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="service2">
+          <div class="box-container" >
+            <img class="img5" src="{% static 'Group 625997.svg' %}" alt="Business png">
+            <h2 class="first-h3">Days Remaining</h2>
+            {% for subscription in user_subscriptions %}
+            {% if subscription.remaining_days > 0 %}
+            <h1 class="a3" href="">{{ subscription.remaining_days }}</h1>
+            {% elif subscription.remaining_days == 0 %}
+                <h1 class="a3" href="">(Last day)</h1>
+            {% else %}
+                <h1 class="a3" href="">(Expired)</h1>
+            {% endif %}
+            {% endfor %}
+            <p style="color: transparent;">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda, earum? Voluptates inventore laudantium .</p>
+          </div>
+        </div>
+
+        <div class="service3">
+          <div class="box-container">
+            <img class="img6" src="{% static 'Group 625997.svg' %}" alt="agencies.png">
+            <h2 class="first-h3">Your Profile Details</h2>
+            <p class="p4">Address - {{ request.user.userprofile.address }}</p>
+            <p class="p4">Phone Number - {{ request.user.userprofile.phone_number }}</p>
+            <p class="p4">Email - {{ request.user.email }}</p>
+            <a class="a3" href="{% url  'contact' %}">Contact Us To Edit Your Profile</a>
+            <p style="color: transparent;">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda, earum? Voluptates inventore laudantium .</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- templates/dashboard.html -->
+<h1>Dashboard</h1>
+<table>
+    <tr>
+        <th>Plan</th>
+        <th>Status</th>
+        <th>End Date</th>
+    </tr>
+    {% for subscription in user_subscriptions %}
+    <tr>
+        <td>{{ subscription.plan.name }}</td>
+        <td>{{ subscription.status }}</td>
+        <td>{{ subscription.end_date }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+    <!--Footer section-->
+
+ <div class="footer-colour">
+    <div class="footer1">
+    <h2 class="h2-footer">Place an order Here</h2>
+    <a class="af" href="{% url 'details' %}"><button class="btn1">Place an order</button></a>
+    </div>
+
+  
+   <div class="footer1">
+      <h2 class="h2-footer">Partner with Trash express</h2>
+       <a class="af" href="{% url 'contact' %}">Click Here</a>
+   </div>
+
+
+   <div class="footer1">
+    <h2 class="h2-footer">Legal</h2>
+    <a class="af" href="{% url  'legal' %}#terms">Terms of Use</a>
+    <a class="af" href="{% url  'legal' %}#privacy">Privacy Policy</a>
+    <a class="af" href="{% url  'legal' %}#cookies">Cookies Policy</a>
+    <a class="af" href="{% url  'legal' %}#end">End User License Agreement</a>
+  </div>
+
+  <div class="footer1">
+     <h2 class="h2-footer">Contact Us</h2>
+     <a >30 Farm road, Rumunduru, Port-harcourt, Rivers state, Nigeria.</a>
+     <a class="af" href="{% url  'contact' %}">+2349156253293</a>
+     <a class="af" href="{% url  'contact' %}">+2348144135127</a>
+     <a class="af" href="{% url  'contact' %}">hadshtechnologies@gmail.com</a>
+  </div>
+</div>
+<div class="copyright"> &copy; 2024 Hadsh Technologies All rights reserved.</div>
+     <script>
+      const hamburger = document.querySelector('.hamburger')
+      const dropDownMenu = document.querySelector('.dropdown-menu')
+      
+    
+      hamburger.addEventListener("click", () => {
+      hamburger.classList.toggle("active");
+      dropDownMenu.classList.toggle("active");
+       })
+
+      document.querySelectorAll(".dropclass").forEach(n => n.addEventListener("click", () => {
+      hamburger.classList.remove("active");
+      }))
+
+
+     </script>
+</body>
+</html>
+
+</body>
+</html>

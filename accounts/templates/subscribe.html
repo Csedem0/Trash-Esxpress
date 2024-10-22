@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe</title>
+    {% load static %}
+
+    <link rel="icon" href="{% static 'trash express img.png' %}">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <!-- Smartsupp Live Chat script -->
+    <script type="text/javascript">
+        var _smartsupp = _smartsupp || {};
+        _smartsupp.key = '03edfc5135ecf17096232e9123deac29cc743131';
+        window.smartsupp||(function(d) {
+          var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+          s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+          c.type='text/javascript';c.charset='utf-8';c.async=true;
+          c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+        })(document);
+    </script>
+    <noscript> Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgba(248,255,244, 0.8);
+            margin: 0;
+            padding: 0;
+        }
+        .article {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            padding: 20px;
+            background-color: rgba(248,255,244, 0.8);
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            min-height: 95vh; /* Changed from height to min-height */
+        }
+
+        .choos-sub-title {
+            margin-bottom: 20px; /* Adjusted margin */
+            font-size: 24px; /* Increased font size */
+            color: #333; /* Added color */
+        }
+
+        form {
+            margin-top: 20px;
+            width: 100%; /* Make the form width 100% */
+            max-width: 400px; /* Limit form width */
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+        label {
+            display: block;
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #555;
+        }
+        label::before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 2px;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+            background-color: #fff;
+            transition: all 0.3s ease;
+        }
+        input[type="radio"]:checked + label::before {
+            border-color: #5f9ea0;
+            background-color: #5f9ea0;
+        }
+        button[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px; /* Adjusted margin */
+            background-color: #008300; /* Changed color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #005300; /* Changed color */
+        }
+
+        .custom-select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .custom-select:hover {
+            border-color: #999;
+        }
+
+        .custom-select:focus {
+            border-color: #555;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+    </style>
+</head>
+<body>
+
+
+<article class="article">
+    <div class="container">
+        <h1 class="choos-sub-title">Subscribe</h1>
+        <!-- <h5 class="choos-sub-title">Note: Atfer making payment successfully, return here to confirm your payment so we can build a Dashboard for you.</h5> -->
+
+        
+
+        <!-- <h2 class="choos-sub-title">Confirm the Plan you paid for to access you Dashboard</h2> -->
+        <!-- <h5 class="choos-sub-title">Note: If you confirm without making payment, you Dashbord created will be Terminated in less than a day.</h5> -->
+
+        <form method="post">
+            {% csrf_token %}
+            <input type="radio" id="basic" name="subscription_plan" value="Basic">
+            <label for="basic">Basic - ₦3000/month</label>
+            <input type="radio" id="standard" name="subscription_plan" value="Standard">
+            <label for="standard">Standard - ₦4000/month</label>
+            <input type="radio" id="premium" name="subscription_plan" value="Premium">
+            <label for="premium">Premium - ₦5000/month</label>
+            <button type="submit">Confirm Subscription</button>
+        </form>
+    </div>
+</article>
+
+
+</body>
+</html>

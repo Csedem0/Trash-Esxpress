@@ -1,0 +1,532 @@
+*{
+   margin: 0;
+   padding: 0;
+}
+html{
+   scroll-behavior: smooth;
+}
+
+body{
+   width: 100%;
+   height: 100vh;
+}
+
+header{
+   position: fixed;
+   width: 100%;
+   height: fit-content;
+   background-color: rgba(248,255,244, 0.8);
+}
+
+nav{
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding-top: 15px;
+   padding-bottom: 15px;
+   padding-left: 4.5%;
+   padding-right: 4.5%;
+   z-index: 1;
+}
+
+.div1{
+   display: flex;
+   align-items: center;
+}
+
+.h11{
+   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+   font-size: 21px;
+   color: rgb(0, 131, 0);
+}
+
+.li1{
+   list-style-type: none;
+   display: inline-block;
+   padding: 10px 20px;
+
+}
+
+.a1{
+   color: rgb(43, 41, 41) ;
+   font-weight: 400;
+   font-size: 17px;
+   text-decoration: none;
+   font-family: Arial, Helvetica, sans-serif;
+}
+
+.a1:hover{
+   color: rgb(0, 131, 0);
+   transition: all ease-out ;
+   font-size: 17px;
+   font-weight: 600;
+}
+
+/* .btn{
+   background-color:rgb(0, 131, 0);
+   color: white;
+   padding: 14px 50px;
+   border: none;
+   cursor: pointer;
+   border-radius: 18px;
+   font-weight: bold;
+   font-size: 16px;
+
+}
+
+.btn:hover{
+  transition: all 0.3s ease-out 0s;
+  background: rgb(20, 92, 83);
+ 
+} */
+
+button{
+   position: relative;
+   background-color:rgb(0, 87, 0);
+   color: white;
+   padding: 17px 70px;
+   border: none;
+   cursor: pointer;
+   border-radius: 10px;
+   font-weight: bold;
+   font-size: 18px;
+   position: relative;
+   overflow: hidden;
+}
+
+
+button:before{
+   content: '';
+   position: absolute;
+   height: 100px;
+   width: 20px;
+   background: #f3f3f3;
+   box-shadow: 0 0 10px #fff;
+   filter: blur(1px);
+   top: -50px;  
+   transition: 0.9s;
+   transform: rotate(-20deg) translateX(-120px);
+
+}
+
+button:hover:before{
+   transform: rotate(-20deg) translate(190px, 70px)
+}
+
+
+.hamburger{
+   display: none;
+   color: rgb(0, 131, 0);
+   font-size: 1.5rem;
+   cursor: pointer;
+   margin-right: 10px;
+}
+
+.bar{
+   background-color: rgb(0, 131, 0);
+   display: block;
+   width: 24px;
+   height: 3px;
+   margin: 5px auto;
+   -webkit-transition: all 0.3s ease-in-out;
+   transition: all 0.3s ease-in-out;
+}
+
+.logo-image{
+   width: 35px;
+}
+
+/*dropdown menu*/
+
+.dropdown-menu{
+   display: none;
+   position: fixed;
+   right: -100%;
+   top:70px;
+   width: 100%;
+   gap: 0;
+   flex-direction: column;
+   text-align: center;
+   background-color:rgba(248,255,244,0.8);
+   overflow: hidden;
+   transition: 0.3s;
+   
+}
+
+.dropdown-menu.active{
+   right: 0;
+}
+
+.li2{
+   display: flex;
+   flex-direction: column;
+   padding: 1.5rem;
+   align-items: center;
+   justify-content: center;
+   gap: 50px;
+   margin: 16px 0;
+   font-family: Arial, Helvetica, sans-serif;
+
+
+}
+
+.dropclass {
+   color: rgb(0, 131, 0);
+   text-decoration: none;
+   letter-spacing: 0.24px;
+   line-height: 30px;
+   font-weight: bolder;
+}
+
+
+
+
+
+/**about- section**/
+
+.about-section1{
+   background-color: rgb(0,87,0);
+   height: fit-content;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+   width: 100%;
+   padding-top: 200px;
+   padding-bottom: 200px;
+   line-height: 2;
+   letter-spacing: 0.3px;
+   font-family: sans-serif;
+   gap: 40px;
+   overflow: hidden;
+   
+
+}
+
+.who{
+   display: flex;
+   font-size: 17px;
+   line-height: 2;
+   letter-spacing:0.3px;
+   align-items: center;
+   justify-content: center;
+}
+
+.who-h1{
+   color: rgba(248,255,244);
+   font-weight: 800;
+   font-size: 45px;
+   font-family:  sans-serif;
+
+}
+
+.who-p{
+   font-family: Arial, Helvetica, sans-serif;
+   color: rgba(248,255,244);
+   font-size: 17px;
+   letter-spacing: 0.3px;
+   
+}
+
+.wp2{
+   margin-left: 50px;
+   margin-right: 50px;
+}
+
+/** mission and vision**/
+.goals{
+   display: flex;
+   height: fit-content;
+   margin-top: 50px;
+   margin-bottom: 70px;
+   justify-content: center;
+   margin-left: 60px;
+   margin-right: 60px;
+   gap: 50px;
+   line-height: 1.5;
+   letter-spacing: 0.3px;
+   overflow: hidden;
+}
+   
+.mission-h1{
+   color: rgb(0,87,0);
+   padding-top: 10px;
+   padding-bottom: 10px;
+   font-family: sans-serif;
+}
+
+.mission-p{
+   font-family: Arial, Helvetica, sans-serif;
+   font-size: 17px;
+
+}
+
+/**product**/
+.product{
+   display: flex;
+   height: fit-content;
+   padding-top: 30px;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   overflow: hidden;
+   
+
+}
+
+.product-h1{
+   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+   font-size:30px;
+   color: rgb(0,87,0);
+}
+
+.hadsh{
+   margin-top: 30px;
+   width: 100px;
+   margin-bottom: 30px;
+}
+
+
+
+/**footer-section**/
+
+.footer-colour{
+   background-color:rgb(0,87,0) ;
+   display: flex;
+   gap: 30px;
+   justify-content: space-evenly;
+   padding-top: 50px;
+   padding-bottom: 50px;
+   line-height: 2;
+   color:rgba(248,255,244);
+   overflow: hidden;
+
+}
+
+.af{
+   text-decoration: none;
+   color: rgba(248,255,244);
+   font-size: 16px;
+   letter-spacing: 0.3px;
+}
+.footer1{
+   display: flex;
+   flex-direction: column;
+   font-family: Arial, Helvetica, sans-serif;
+   overflow: hidden;
+}
+
+.h2-footer{
+   font-family: sans-serif;
+   font-size: 20px;
+}
+
+.div4{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   font-family: sans-serif;
+   font-size:15px ;
+}
+.btn1{
+   background-color:#fff;
+   color: rgb(0, 87, 0);
+   padding: 14px 40px;
+   border: none;
+   cursor: pointer;
+   border-radius: 18px;
+   font-weight: bold;
+   font-size: 16px;
+   margin-right: 50px;
+}
+
+.btn1:hover{
+   color: rgba(248,255,244);
+   background-color: rgb(20, 92, 83);
+}
+.MPP{
+   padding-bottom: 15px;
+   font-size: 24px;
+   width: 100%;
+
+}
+.copyright{
+   display: flex;
+   justify-content: center;
+   color:rgba(248,255,244);
+   padding-top: 30px;
+   padding-bottom: 30px;
+   font-family: sans-serif;
+   background-color: rgb(0,87,0);
+   font-size: 15px;
+   letter-spacing: 0.3px;
+   text-align: center;
+
+}
+
+
+
+
+@media screen and (max-width:912px){
+   .ul1{
+      display: none;
+   }
+
+   .btn{
+      display: none;
+   }
+
+   .hamburger{
+      display: block;
+      color: rgb(0, 131, 0);
+      font-size: 1.8rem;
+   
+   }
+
+   .hamburger.active .bar:nth-child(2){
+      opacity: 0;
+   }
+
+   .hamburger.active .bar:nth-child(1){
+      transform: translateY(8px)rotate(45deg);
+   }
+   .hamburger.active .bar:nth-child(3){
+      transform: translateY(-8px)rotate(-45deg);
+   }
+
+
+
+
+   .dropdown-menu{
+      display: block;
+      top: 60px;
+      width:100%;
+
+   }
+   .who-h1{
+      font-size: 38px;
+   }
+   .product-h1{
+      font-size: 35px;
+   }
+   
+
+   .dropdown-menu.open{
+      height: 500px ;
+   }
+
+   .about-section1{
+      display: flex;
+      flex-direction: column;
+   }
+
+   .goals{
+      display: flex;
+      flex-direction: column;
+   }
+
+   .footer-colour{
+      display: flex;
+      flex-direction: column;
+   }
+
+   .footer1{
+      padding-left: 20px;
+   }
+
+
+}
+
+
+@media screen and (max-width:540px){
+
+   .ul1{
+      display: none;
+   }
+
+   
+   .btn{
+      display: none;
+   }
+
+
+   .dropdown-menu{
+      top: 60px;
+      width: 100%;
+   }
+
+   .l12{
+      gap: 10px;
+   }
+
+
+   .about-section1{
+      display: flex;
+      flex-direction: column;
+   }
+   .who-h1{
+      font-size: 40px;
+   }
+
+   .goals{
+      display: flex;
+      flex-direction: column;
+   }
+
+   .product-h1{
+      font-size: 16px;
+      padding-left: 10px;
+   }
+
+   .footer-colour{
+      display: flex;
+      flex-direction: column;
+   }
+   
+
+   }
+
+   @media screen and (max-width:300px){
+
+      .dropdown-menu{
+         display: block;
+         top: 50px;
+         width: 100%;
+      }
+
+     .who-h1{
+      font-size:26px;
+      }
+
+     .mission-img{
+       width: 150px;
+
+      }
+
+      .mission-h1{
+         font-size: 25px;
+      }
+
+      .vision-img{
+         width: 150px;
+      }
+
+      .product-h1{
+         font-size: 12px;
+      }
+
+      .copyright{
+         font-size: 11px;
+      }
+
+
+
+
+
+
+   }
+
+
+
+
+

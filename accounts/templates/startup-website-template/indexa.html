@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+  integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trash Express</title>
+
+  {% load static %}
+
+  <link rel="icon" href="{% static 'trash express img.png' %}">
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+  <!-- Smartsupp Live Chat script -->
+<script type="text/javascript">
+  var _smartsupp = _smartsupp || {};
+  _smartsupp.key = '03edfc5135ecf17096232e9123deac29cc743131';
+  window.smartsupp||(function(d) {
+    var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+    s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+    c.type='text/javascript';c.charset='utf-8';c.async=true;
+    c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+  })(document);
+  </script>
+  <noscript> Powered by <a href=“https://www.smartsupp.com” target=“_blank”>Smartsupp</a></noscript>
+</head>
+
+<body>
+  <!--Header section-->
+  <header>
+    <nav>
+      <div class="div1">
+        <img class="logo-image" src="{% static 'trash express img.png' %}" alt="Trash express logo">
+        <h1 class="h11">Trash Express</h1>
+      </div>
+
+      <ul class="ul1">
+        <li class="li1"><a class="a1" href="{% url 'home' %}">Home</a></li>
+        <li class="li1"><a class="a1" href="{% url 'about' %}">About Us</a></li>
+        <li class="li1"><a class="a1" href="{% url 'services' %}">Services</a></li>
+        <li class="li1"><a class="a1" href="{% url 'contact' %}">Contact Us</a></li>
+      </ul>
+        <a href="{% url 'details' %}"><button class="btn">Place an order</button></a>
+
+       <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+       </div>
+    </nav>
+  </header>
+
+  <div class="dropdown-menu">
+    <li class="li2"><a class="dropclass" href="{% url 'home' %}">Home</a></li>
+    <li class="li2"><a class="dropclass" href="{% url 'about' %}">About Us</a></li>
+    <li class="li2"><a class="dropclass" href="{% url 'services' %}">Services</a></li>
+    <li class="li2"><a class="dropclass" href="{% url 'contact' %}">Contact Us</a></li>
+  </div>
+
+  <!--Landing page section-->
+  <div class="landing-page">
+    <div class="landing-page1"> 
+      <div class="container">
+        <h1 id="typing-text" class="typing-text">Dedicated to simplifying <br>waste<span class="span1"> collection</span> and <br>management.</h1>
+      </div>
+      <p class="p1"> Your Eco-Friendly Waste Solution.</p>
+
+      
+      <a class="bt9" href="{% url 'details' %}"><button class="btn3">Place an order</button></a>
+      <a class="bt9" href="{% url  'home' %}#subscribe"><button class="btn3">Subscribe Now</button></a>
+      
+      
+     <!--- <div class="igm">
+        <a href=""><img class="img1" src="app store badge.svg" alt="download on appstore" srcset=""></a>
+        <a href=""><img class="img2" src="get-it-on-google-play-badge.svg" alt="download on google play" srcset=""></a>
+      </div> -->
+    </div>
+
+    <div class="landing-page2">
+      <img class="img3" src="{% static 'resize garbage man.png' %}" alt="trash express " srcset="">
+    </div>
+  </div>
+
+<a id="subscribe">
+  <div class="subscription">
+    
+    <div class="sub-heading">Subscribe Now</div>
+    <div class="sub-title">Basic, Standard and Premium Plans</div>
+    <div class="sub-container">
+      <div class="sub-card">
+        <div class="sub-plan">Premium Plan</div>
+        <div class="sub-price">$10/mo</div>
+        
+        <div>
+          <div class="sub-properties">The plan includes</div>
+              <div class="sub-properties-content1">✓ Weekly trash collection service</div>
+              <div class="sub-properties-content1">✓ Additional bags available for purchase</div>
+              <div class="sub-properties-content1">✓ Customer support available during business hours</div>
+        </div>
+        <button class="sub-pay" onclick="redirectToSubscribe()">Get Started</button>
+      </div>
+      <div class="sub-card">
+        <div class="sub-plan">Basic Plan</div>
+        <div class="sub-price">$5/mo</div>
+        <div>
+          <div class="sub-properties">The plan includes</div>
+              <div class="sub-properties-content1">✓ Weekly trash collection service</div>
+              <div class="sub-properties-content1">✓ Additional bags available for purchase</div>
+              <div class="sub-properties-content1">✓ Customer support available during business hours</div>
+        </div>
+        <button class="sub-pay" onclick="redirectToSubscribe()">Get Started</button>
+
+      </div>
+      <div class="sub-card">
+        <div class="sub-plan">Standard Plan</div>
+        <div class="sub-price">$8/mo</div>
+        <div>
+          <div class="sub-properties">The plan includes</div>
+              <div class="sub-properties-content1">✓ Weekly trash collection service</div>
+              <div class="sub-properties-content1">✓ Additional bags available for purchase</div>
+              <div class="sub-properties-content1">✓ Customer support available during business hours</div>
+        </div>
+        <button class="sub-pay" onclick="redirectToSubscribe()">Get Started</button>
+      </div>
+    </div>
+  
+  </div></a>
+
+
+  <!--services-section-->
+  <div class="services-colour">
+    <div class="services-section">
+      <div class="services-h1">
+        <h4 class="h41">WHO WE SERVE?</h4>
+        <h1 class="h12">WE ARE HERE TO SERVE YOU!</h1>
+
+      </div>
+      <div id="myLinks" div class="services-div">
+        <div class="service1">
+          <div class="box-container">
+            <img class="img4" src="{% static 'citizens.svg' %}" alt="citizens png">
+            <h3 class="first-h3">Citizens</h3>
+            <p class="p2">Trash express empowers citizens to schedule waste pickups at their convenience, reducing the
+              chances of overflowing bins.</p>
+            <a class="a3" href="{% url  'services' %}#citizens">Read more</a>
+
+          </div>
+        </div>
+
+        <div class="service2">
+          <div class="box-container">
+            <img class="img5" src="{% static 'Group 625998.svg' %}" alt="Business png">
+            <h3 class="first-h3">Business operators</h3>
+            <p class="p3">Trash express aims to enable the waste management ecosystem businesses by optimizing their
+              collections and operations to ensure a seamless business transaction flow.</p>
+            <a class="a3" href="{% url  'services' %}#business">Read more</a>
+          </div>
+        </div>
+
+        <div class="service3">
+          <div class="box-container">
+            <img class="img6" src="{% static 'Group 625997.svg' %}" alt="agencies.png">
+            <h3 class="first-h3">Agencies</h3>
+            <p class="p4">Trash express collaborates with agencies to meet specific requirements, optimizing waste
+              disposal processes.</p>
+            <a class="a3" href="{% url  'services' %}#agencies">Read more</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--Review section-->
+  <div class="review-colour">
+    <div class="div-review">
+      <h1 class="h1-review">What people are saying about us...</h1>
+    </div>
+
+
+    <div id="slider">
+      <div class="slii">
+        <input type="radio" name="slider" id="slide1" checked>
+        <input type="radio" name="slider" id="slide2">
+        <input type="radio" name="slider" id="slide3">
+
+
+        <div id="slides">
+          <div id="overflow">
+            <div class="inner">
+              <div class="slide slide_1">
+                <div class="slide-content first">
+                  <p class="p2-review">"This is the best waste disposal technology i`ve ever seen. Quality services.
+                    Keep it up!"</p>
+                  <span class="span-review">Sobulachi Emmanuel</span>
+                  <p class="p-review">Household User</p>
+                </div>
+              </div>
+
+
+              <div class="slide slide_2">
+                <div class="slide-content">
+                  <p class="p2-review">"I had these five bags of waste in my backyard. I requested a pick-up and the
+                    response was fast."</p>
+                  <span class="span-review">Dorathy Nafo</span>
+                  <p class="p-review">Household User</p>
+                </div>
+              </div>
+
+
+              <div class="slide slide_3">
+                <div class="slide-content">
+                  <p class="p2-review">"Since i found trash express, waste disposal has been very easy for me. I no longer struggle to find a local waste collector."
+                  </p>
+                  <span class="span-review">Bright Donatus</span>
+                  <p class="p-review">Household User</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="navigation-auto">
+          <div class="auto-btn1"></div>
+          <div class="auto-btn2"></div>
+          <div class="auto-btn3"></div>
+        </div>
+
+      </div>
+
+      <div id="bullets">
+        <label for="slide1"></label>
+        <label for="slide2"></label>
+        <label for="slide3"></label>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!--Footer section-->
+
+  <div class="footer-colour">
+    <div class="footer1">
+    <h2 class="h2-footer">Place an order Here</h2>
+    <a class="af" href="{% url 'details' %}"><button class="btn1">Place an order</button></a>
+    </div>
+
+  
+   <div class="footer1">
+      <h2 class="h2-footer">Partner with Trash express</h2>
+       <a class="af" href="{% url 'contact' %}">Click Here</a>
+   </div>
+
+
+   <div class="footer1">
+    <h2 class="h2-footer">Legal</h2>
+    <a class="af" href="{% url  'legal' %}#terms">Terms of Use</a>
+    <a class="af" href="{% url  'legal' %}#privacy">Privacy Policy</a>
+    <a class="af" href="{% url  'legal' %}#cookies">Cookies Policy</a>
+    <a class="af" href="{% url  'legal' %}#end">End User License Agreement</a>
+  </div>
+
+  <div class="footer1">
+     <h2 class="h2-footer">Contact Us</h2>
+     <a >30 Farm road, Rumunduru, Port-harcourt, Rivers state, Nigeria.</a>
+     <a class="af" href="{% url  'contact' %}">+2349156253293</a>
+     <a class="af" href="{% url  'contact' %}">+2348144135127</a>
+     <a class="af" href="{% url  'contact' %}">hadshtechnologies@gmail.com</a>
+  </div>
+</div>
+<div class="copyright"> &copy; 2024 Hadsh Technologies All rights reserved.</div>
+
+  <script>
+
+    const hamburger = document.querySelector('.hamburger')
+    const dropDownMenu = document.querySelector('.dropdown-menu')
+
+
+    var counter = 1;
+    setInterval(function () {
+      document.getElementById('slide' + counter).checked = true;
+      counter++;
+      if (counter > 3) {
+        counter = 1;
+      }
+    }, 5000);
+
+
+      hamburger.addEventListener("click", () => {
+      hamburger.classList.toggle("active");
+      dropDownMenu.classList.toggle("active");
+    })
+
+    document.querySelectorAll(".dropclass").forEach(n => n.addEventListener("click", () => {
+      hamburger.classList.remove("active");
+    }))
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+  const cards = document.querySelectorAll('.sub-card');
+  let currentIndex = 0;
+
+  setInterval(() => {
+    const previousIndex = currentIndex;
+    currentIndex = (currentIndex + 1) % cards.length;
+    
+    cards[previousIndex].classList.remove('active');
+    cards[currentIndex].classList.add('active');
+  }, 3000); // Change slide every 3 seconds
+});
+
+
+function redirectToSubscribe() {
+        window.location.href = "{% url 'subscribe' %}";
+    }
+
+  </script>
+
+</body>
+</html>  

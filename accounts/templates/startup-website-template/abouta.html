@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Trash Express</title>
+
+    {% load static %}
+
+    <link rel="icon" href="{% static 'trash express img.png' %}">
+    <link rel="stylesheet" href="{% static 'about.css' %}">
+
+<!-- Smartsupp Live Chat script -->
+<script type="text/javascript">
+  var _smartsupp = _smartsupp || {};
+  _smartsupp.key = '03edfc5135ecf17096232e9123deac29cc743131';
+  window.smartsupp||(function(d) {
+    var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+    s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+    c.type='text/javascript';c.charset='utf-8';c.async=true;
+    c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+  })(document);
+  </script>
+  <noscript> Powered by <a href=“https://www.smartsupp.com” target=“_blank”>Smartsupp</a></noscript>
+
+</head>
+<body>
+      <!--Header section-->
+      <header>
+        <nav>
+            <div class="div1">
+             <img class="logo-image" src="{% static 'trash express img.png' %}" alt="Trash express logo">
+             <h1 class="h11">Trash Express</h1>
+            </div>
+
+            <ul class="ul1">
+              <li class="li1"><a class="a1" href="{% url 'home' %}">Home</a></li>
+              <li class="li1"><a class="a1" href="{% url 'about' %}">About Us</a></li>
+              <li class="li1"><a class="a1" href="{% url 'services' %}">Services</a></li>
+              <li class="li1"><a class="a1" href="{% url 'contact' %}">Contact Us</a></li>
+            </ul>
+              <a href="{% url 'details' %}"><button class="btn">Place an order</button></a>
+            
+
+
+      
+
+            <div class="hamburger">
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+            </div> 
+        </nav>
+      </header>
+
+      <div class="dropdown-menu">
+        <li class="li2"><a class="dropclass" href="{% url 'home' %}">Home</a></li>
+        <li class="li2"><a class="dropclass" href="{% url 'about' %}">About Us</a></li>
+        <li class="li2"><a class="dropclass" href="{% url 'services' %}">Services</a></li>
+        <li class="li2"><a class="dropclass" href="{% url 'contact' %}">Contact Us</a></li>
+     </div>
+  
+   
+
+     <!-- About section -->
+
+      <div class="about-section1">
+        <div class="wp2">
+        <h1 class="who-h1">Who Are We</h1>
+        <p class="who-p">Trash Express is a platform owned by Hadsh Technologies that utilizes software applications and data to promote a circular economy and achieve sustainability through waste management. We focus on using technology to protect the environment and generate profit.</p>
+        </div>
+
+       <div class="wp2">
+       <h1 class="who-h1"> What We Do</h1>
+       <p class="who-p">We connect ecosystem stakeholder by ensuring ecosystem inclusion that connects waste generators to waste collectors across the value chain. Our innovation has created a waste-on-demand solution. Furthermore we provide a learning platform for waste generators to know how to handle waste and ensure a cleaner environment.</p>
+       </div>
+      </div>
+     
+          
+
+      <!--Mision and Vision section-->
+
+      <div class="goals">
+        <div class="mission">
+        <img class="mission-img" src="{% static 'mission.webp' %}" alt="mission png" srcset="">
+        <h1 class="mission-h1">Our Mission.</h1>
+        <p class="mission-p">Our mission is to achieve scarcity with digital tools and build a sustainable robust circular economy one community/state at a time. </p>
+        </div>
+        <div class="vision">
+          <img class="vision-img" src="{% static 'vision.webp' %}" alt="vision png" srcset="">
+          <h1 class="mission-h1">Our Vision.</h1>
+          <p class="mission-p">Our vision is to become a global waste technology services provider that meets all global waste challenges.</p>
+        </div> 
+      </div>
+ 
+       <!--Product section-->
+
+      <div class="product">
+        <h1 class="product-h1">A PRODUCT OF HADSH TECHNOLOGIES.</h1>
+        <img class="hadsh" src="{% static 'Hadsh Technologies logo.png' %}" alt="" srcset="">
+      </div>
+
+
+      <!--Footer section-->
+
+        <div class="footer-colour">
+          <div class="footer1">
+          <h2 class="h2-footer">Place an order Here</h2>
+          <a class="af" href="{% url 'details' %}"><button class="btn1">Place an order</button></a>
+          </div>
+      
+        
+         <div class="footer1">
+            <h2 class="h2-footer">Partner with Trash express</h2>
+             <a class="af" href="{% url 'contact' %}">Click Here</a>
+         </div>
+    
+    
+         <div class="footer1">
+          <h2 class="h2-footer">Legal</h2>
+          <a class="af" href="{% url  'legal' %}#terms">Terms of Use</a>
+          <a class="af" href="{% url  'legal' %}#privacy">Privacy Policy</a>
+          <a class="af" href="{% url  'legal' %}#cookies">Cookies Policy</a>
+          <a class="af" href="{% url  'legal' %}#end">End User License Agreement</a>
+        </div>
+    
+        <div class="footer1">
+           <h2 class="h2-footer">Contact Us</h2>
+           <a >30 Farm road, Rumunduru, Port-harcourt, Rivers state, Nigeria.</a>
+           <a class="af" href="{% url  'contact' %}">+2349156253293</a>
+           <a class="af" href="{% url  'contact' %}">+2348144135127</a>
+           <a class="af" href="{% url  'contact' %}">hadshtechnologies@gmail.com</a>
+        </div>
+      </div>
+      <div class="copyright"> &copy; 2024 Hadsh Technologies All rights reserved.</div>
+
+      <script>
+
+    const hamburger = document.querySelector('.hamburger')
+    const dropDownMenu = document.querySelector('.dropdown-menu')
+        
+
+    hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("active");
+    dropDownMenu.classList.toggle("active");
+    })
+
+    document.querySelectorAll(".dropclass").forEach(n => n.addEventListener("click", () => {
+      hamburger.classList.remove("active");
+    }))
+
+      </script>
+    
+</body>
+</html>

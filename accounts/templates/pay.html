@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Trash Express</title>
+    {% load static %}
+
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'trash express img.png' %}">
+    <link rel="stylesheet" href="{% static 'buckets.css' %}">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <!-- Smartsupp Live Chat script -->
+<script type="text/javascript">
+    var _smartsupp = _smartsupp || {};
+    _smartsupp.key = '03edfc5135ecf17096232e9123deac29cc743131';
+    window.smartsupp||(function(d) {
+      var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+      s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+      c.type='text/javascript';c.charset='utf-8';c.async=true;
+      c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+    })(document);
+    </script>
+    <noscript> Powered by <a href=“https://www.smartsupp.com” target=“_blank”>Smartsupp</a></noscript>
+</head>
+<body>
+
+           <!--Header section-->
+   <!-- Navbar & Carousel Start -->
+   <div class="container-fluid position-relative p-0">
+    <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
+        <a href="index.html" class="navbar-brand p-0" style="display: flex; align-items: center;">
+            <img src="{% static 'trash express img.png' %}" alt="Trash Express Logo" class="Image" style="width: 40px; height: auto; margin-right: 5px;">
+            <h1 class="m-0">Trash Express</h1>
+        </a>
+        
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <div class="navbar-nav ms-auto py-0">
+            <a href="{% url 'home' %}" class="nav-item nav-link active">Home</a>
+            <a href="{% url 'about' %}" class="nav-item nav-link active">About</a>
+            <a href="{% url 'services' %}" class="nav-item nav-link active">Services</a>
+            
+            <a href="{% url 'contact' %}" class="nav-item nav-link active">Contact</a>
+        </div>
+            <!-- <butaton type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton>
+            <a href="https://htmlcodex.com/startup-company-website-template" class="btn btn-primary py-2 px-4 ms-3">Download Pro Version</a> -->
+        </div>
+    </nav>
+   </div>
+
+      <div class="dropdown-menu">
+        <li class="li2"><a class="dropclass" href="{% url 'home' %}">Home</a></li>
+        <li class="li2"><a class="dropclass" href="{% url 'about' %}">About Us</a></li>
+        <li class="li2"><a class="dropclass" href="{% url 'services' %}">Services</a></li>
+        <li class="li2"><a class="dropclass" href="{% url 'contact' %}">Contact Us</a></li>
+     </div>
+
+        <!---Payment-->
+        <div class="payment-colour">
+          <div class="mp">
+          <h3 style="color: #28a745;">MAKE PAYMENT</h3> 
+          </div>
+
+          
+
+          <div class="mp">
+          <h2 class="h2"> Price per bag  ₦300</h2>
+          </div>
+
+           
+          <div class="payment">
+           <div class="service1">
+            <div class="box-container">
+              <h3 class="h3" class="h3" style="color: aliceblue;">Number of bags <br>1-9,  0% Discount </h3>  
+
+              <form name="myform" action="{% url  'details' %}">
+                <label class="label">Quantity</label> <br>
+
+               </form>
+
+               <form 
+               method="POST"
+               action="https://checkout.flutterwave.com/v3/hosted/pay">
+  
+               <input 
+                type="hidden"
+                name="public_key"
+               value="FLWPUBK-1060c6f5ef9d48deb4cbacfa2b386bac-X"/>
+
+              
+
+  
+              <input type="hidden" name="customer[name]" value="Success"/>
+              <input type="hidden" 
+              name="tx_ref" 
+              value="txref-81124"/>
+
+
+
+                <select name="quantity" onchange="totalPrice(this.value)">
+                  <option>0</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                  <option>9</option>
+                </select>
+                <label>Total Price:</label>
+                <input type="text" name="amount" id="total" onclick="passValues();" readonly>
+
+
+                <input type="hidden" name="currency" value="NGN"/>
+                <input type="hidden" name="meta[source]" value="docs-html-test"/>
+     
+                <br/>
+
+                <div class="middle">
+                  <input class="buttoni"
+                  type="text"
+                  name="customer[email]" required
+                  value="" 
+                  placeholder="enter your email"/> 
+                  </div>
+     
+                <input class="button2" type="submit" id="start-payment-button" value="MAKE PAYMENT"/>
+
+              </form>
+
+              <script
+              type="text/javascript"
+              src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+   
+              <script type="text/javascript">
+               emailjs.init('BQiBu9AZlZaCIn_kN');
+               </script>           
+              
+             </div>
+            </div>
+      
+              <script>
+                function passValues(){
+                  var price = document.getElementById("total").value;
+                  localStorage.setItem("textvalue", price);
+                  return false;
+                }
+              </script>
+
+
+          
+  
+          <div class="service2">
+            <div class="box-container">
+              <h3 class="h3" style="color: aliceblue;">Number of bags <br>10-50,  5% Discount </h3>  
+              <form name="myform">
+                <label>Quantity</label> 
+                <br>
+
+              </form>
+
+              <form 
+              method="POST"
+              action="https://checkout.flutterwave.com/v3/hosted/pay">
+      
+              <input 
+              type="hidden"
+              name="public_key"
+              value="FLWPUBK-1060c6f5ef9d48deb4cbacfa2b386bac-X"/>
+      
+             
+      
+             <input type="hidden" name="customer[name]" value="Success"/>
+             <input type="hidden" 
+             name="tx_ref" 
+             value="txref-81124"/>
+
+
+                <select name="quantity" onchange="ttalPrice(this.value)">
+                  <option>0</option>
+                  <option>10</option>
+                  <option>11</option>
+                  <option>12</option>
+                  <option>13</option>
+                  <option>14</option>
+                  <option>15</option>
+                  <option>16</option>
+                  <option>17</option>
+                  <option>18</option>
+                  <option>19</option>
+                  <option>20</option>
+                  <option>21</option>
+                  <option>22</option>
+                  <option>23</option>
+                  <option>24</option>
+                  <option>25</option>
+                  <option>26</option>
+                  <option>27</option>
+                  <option>28</option>
+                  <option>29</option>
+                  <option>30</option>
+                  <option>31</option>
+                  <option>32</option>
+                  <option>33</option>
+                  <option>34</option>
+                  <option>35</option>
+                  <option>36</option>
+                  <option>37</option>
+                  <option>38</option>
+                  <option>39</option>
+                  <option>40</option>
+                  <option>41</option>
+                  <option>42</option>
+                  <option>43</option>
+                  <option>44</option>
+                  <option>45</option>
+                  <option>46</option>
+                  <option>47</option>
+                  <option>48</option>
+                  <option>49</option>
+                  <option>50</option>
+
+
+                </select>
+                <label>Total Price:</label>
+                <input type="text" name="amount" id="ttal" readonly>
+
+
+                <input type="hidden" name="currency" value="NGN"/>
+                <input type="hidden" name="meta[source]" value="docs-html-test"/>
+         
+                <br/>
+
+
+                <div class="middle">
+                <input class="buttoni"
+                type="text"
+                name="customer[email]" required
+                value="" 
+                placeholder="enter your email"/> 
+                </div>
+
+
+
+                <input class="button2" type="submit" id="start-payment-button" value="MAKE PAYMENT"/>
+               
+                </form>
+    
+             
+                <script
+                type="text/javascript"
+                src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+         
+                <script type="text/javascript">
+                  emailjs.init('BQiBu9AZlZaCIn_kN');
+                </script>           
+                  </div>
+                </div>
+           
+             
+
+
+          <div class="service3">
+            <div class="box-container">
+              <h3  style="color: aliceblue;">Number of bags <br>Above 50,  10% Discount </h3>  
+              <form name="myform">
+                <label>Quantity</label> <br>
+
+                </form>
+
+                <form 
+                method="POST"
+                action="https://checkout.flutterwave.com/v3/hosted/pay">
+        
+                <input 
+                type="hidden"
+                name="public_key"
+                value="FLWPUBK-1060c6f5ef9d48deb4cbacfa2b386bac-X"/>
+        
+               
+               <input type="hidden" name="customer[name]" value="Success"/>
+               <input type="hidden" 
+               name="tx_ref" 
+               value="txref-81124"/>
+      
+
+                <select name="quantity" onchange="talPrice(this.value)">
+                  <option>0</option>
+                  <option>51</option>
+                  <option>52</option>
+                  <option>53</option>
+                  <option>54</option>
+                  <option>55</option>
+                  <option>56</option>
+                  <option>57</option>
+                  <option>58</option>
+                  <option>59</option>
+                  <option>60</option>
+                  <option>61</option>
+                  <option>62</option>
+                  <option>63</option>
+                  <option>64</option>
+                  <option>65</option>
+                  <option>66</option>
+                  <option>67</option>
+                  <option>68</option>
+                  <option>69</option>
+                  <option>70</option>
+                  <option>71</option>
+                  <option>72</option>
+                  <option>73</option>
+                  <option>74</option>
+                  <option>75</option>
+                  <option>76</option>
+                  <option>77</option>
+                  <option>78</option>
+                  <option>79</option>
+                  <option>80</option>
+                  <option>81</option>
+                  <option>82</option>
+                  <option>83</option>
+                  <option>84</option>
+                  <option>85</option>
+                  <option>86</option>
+                  <option>87</option>
+                  <option>88</option>
+                  <option>89</option>
+                  <option>90</option>
+                  <option>91</option>
+                  <option>92</option>
+                  <option>93</option>
+                  <option>94</option>
+                  <option>95</option>
+                  <option>96</option>
+                  <option>97</option>
+                  <option>98</option>
+                  <option>99</option>
+                  <option>100</option>
+
+                </select>
+                <label>Total Price:</label>
+                <input type="text" name="amount" id="tal" readonly>
+       
+            <input type="hidden" name="currency" value="NGN"/>
+            <input type="hidden" name="meta[source]" value="docs-html-test"/>
+
+           <br/>
+
+           <div class="middle">
+            <input class="buttoni" type="text" name="customer[email]" required value="" placeholder="enter your email"/> 
+            </div>
+            
+
+           
+           <input class="button2" type="submit" id="start-payment-button" value="MAKE PAYMENT"/>
+           
+
+       </form>
+
+    
+       <script
+       type="text/javascript"
+       src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+       <script type="text/javascript">
+         emailjs.init('BQiBu9AZlZaCIn_kN');
+        </script>           
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+
+<!-- Footer Start -->
+<div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
+  <div class="container">
+      <div class="row gx-5">
+          <div class="col-lg-4 col-md-6 footer-about">
+              <div class="d-flex flex-column align-items-center justify-content-center text-center h-100 p-4" style="background-color: #34AD54;">
+                  <a href="index.html" class="navbar-brand">
+                      <h1 class="m-0 text-white"><i class=" me-2"></i>Trash Express</h1>
+                  </a>
+                  <p class="mt-3 mb-4">Lorem diam sit erat dolor elitr et, diam lorem justo amet clita stet eos sit. Elitr dolor duo lorem, elitr clita ipsum sea. Diam amet erat lorem stet eos. Diam amet et kasd eos duo.</p>
+                  <form action="">
+                      <div class="input-group">
+                          <input type="text" class="form-control border-white p-3" placeholder="Your Email">
+                          <button class="btn btn-dark">Sign Up</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+          <div class="col-lg-8 col-md-6">
+              <div class="row gx-5">
+                  <div class="col-lg-4 col-md-12 pt-5 mb-5">
+                      <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                          <h3 class="text-light mb-0">Get In Touch</h3>
+                      </div>
+                      <div class="d-flex mb-2">
+                          <i class="bi bi-geo-alt text-primary me-2" style="color: #34AD54;"></i>
+                          <p class="mb-0">123 Street, New York, USA</p>
+                      </div>
+                      <div class="d-flex mb-2">
+                          <i class="bi bi-envelope-open text-primary me-2" style="color: #34AD54;"></i>
+                          <p class="mb-0">info@example.com</p>
+                      </div>
+                      <div class="d-flex mb-2">
+                          <i class="bi bi-telephone text-primary me-2" style="color: #34AD54;"></i>
+                          <p class="mb-0">+012 345 67890</p>
+                      </div>
+                      <div class="d-flex mt-4">
+                          <a class="btn btn-primary btn-square me-2" href="#" style="background-color: #34AD54; border-color: #34AD54;"><i class="fab fa-twitter fw-normal"></i></a>
+                          <a class="btn btn-primary btn-square me-2" href="#" style="background-color: #34AD54; border-color: #34AD54;"><i class="fab fa-facebook-f fw-normal"></i></a>
+                          <a class="btn btn-primary btn-square me-2" href="#" style="background-color: #34AD54; border-color: #34AD54;"><i class="fab fa-linkedin-in fw-normal"></i></a>
+                          <a class="btn btn-primary btn-square" href="#" style="background-color: #34AD54; border-color: #34AD54;"><i class="fab fa-instagram fw-normal"></i></a>
+                      </div>
+                  </div>
+                  <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
+                      <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                          <h3 class="text-light mb-0">Quick Links</h3>
+                      </div>
+                      <div class="link-animated d-flex flex-column justify-content-start">
+                          <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right" style="color: #34AD54; me-2;"></i>Home</a>
+                          <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right" style="color: #34AD54; me-2;"></i>About Us</a>
+                          <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right" style="color: #34AD54; me-2;"></i>Our Services</a>
+                          <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right" style="color: #34AD54; me-2;"></i>Meet The Team</a>
+                          <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right" style="color: #34AD54; me-2;"></i>Latest Blog</a>
+                          <a class="text-light" href="#"><i class="bi bi-arrow-right" style="color: #34AD54; me-2;"></i>Contact Us</a>
+                      </div>
+                  </div>
+                  <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
+                      <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                          <h3 class="text-light mb-0">Popular Links</h3>
+                      </div>
+                      <div class="link-animated d-flex flex-column justify-content-start">
+                          <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right" style="color: #34AD54; me-2;"></i>Home</a>
+                          <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right" style="color: #34AD54; me-2;"></i>About Us</a>
+                          <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right" style="color: #34AD54; me-2;"></i>Our Services</a>
+                          <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right" style="color: #34AD54; me-2;"></i>Meet The Team</a>
+                          <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right" style="color: #34AD54; me-2;"></i>Latest Blog</a>
+                          <a class="text-light" href="#"><i class="bi bi-arrow-right" style="color: #34AD54; me-2;"></i>Contact Us</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="container-fluid text-white" style="background: #061429;">
+      <div class="container text-center">
+          <div class="row justify-content-end">
+              <div class="col-lg-8 col-md-6">
+                  <div class="d-flex align-items-center justify-content-center" style="height: 75px;">
+                      <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">Trashexpress</a>. All Rights Reserved. 
+          
+          <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+          Designed by <a class="text-white border-bottom" href="">Csedemo</a></p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Footer End -->
+
+
+  <!-- Back to Top -->
+  <!-- Back to Top with Greenish Color -->
+<a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top" style="background-color: #28a745; border-color: #28a745;">
+  <i class="bi bi-arrow-up"></i>
+</a>
+
+
+
+  <!-- JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+  <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+  <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+  <script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
+  <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+  <!-- Template Javascript -->
+  <script src="{% static 'js/main.js' %}"></script>
+
+  <script>
+    function totalPrice(val)
+    {
+      var t=val*300;
+      document.getElementById("total").value=t;
+
+    }
+
+    function ttalPrice(val){
+      var t=val*285;
+      document.getElementById("ttal").value=t;
+    }
+
+
+    function talPrice(val){
+      var t=val*270;
+      document.getElementById("tal").value=t;
+    }
+
+
+
+
+  const hamburger = document.querySelector('.hamburger')
+  const dropDownMenu = document.querySelector('.dropdown-menu')
+
+
+  hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("active");
+    dropDownMenu.classList.toggle("active");
+    })
+
+    document.querySelectorAll(".dropclass").forEach(n => n.addEventListener("click", () => {
+      hamburger.classList.remove("active");
+    }))
+   
+ </script>
+
+</body>
+</html>
