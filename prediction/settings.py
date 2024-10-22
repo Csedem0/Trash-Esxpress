@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
-DEBUG = False  # Set to False in production
+DEBUG = True  # Set to False in production
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(" ")
 # ALLOWED_HOSTS =  ['localhost', '127.0.0.1']
@@ -128,7 +128,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_L10N = True
+# USE_L10N = True
 
 USE_TZ = True
 
@@ -174,3 +174,5 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
 # Redirect URLs
 LOGIN_REDIRECT_URL = '/accounts/subscribe/'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
