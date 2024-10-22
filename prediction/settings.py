@@ -161,4 +161,4 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 # Redirect URLs
-LOGIN_REDIRECT_URL = '/accounts/subscribe/'
+LOGIN_REDIRECT_URL = '/accounts/dashboard/'

@@ -124,7 +124,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
         <a href="{% url 'home' %}" class="navbar-brand p-0" style="display: flex; align-items: center;">
             <img src="{% static 'trash express img.png' %}" alt="Trash Express Logo" class="Image" style="width: 40px; height: auto; margin-right: 5px;">
-            <h1 class="m-0">Trash Express</h1>
+            <h1 class="m-0" style="color: #28a745;">Trash Express</h1>
         </a>
         
         
@@ -169,7 +169,7 @@
         {% for error in form.password.errors %}
             <p style="color: red;">{{ error }}</p>
         {% endfor %}
-        <button>Login</button>
+        <button style="background-color: #28a745;">Login</button>
         <a href="{% url 'register' %}">No Account? Register here</a>
         <!-- <p><a href="{% url 'password_reset' %}">Forgotten your password?</a></p> -->
     </form>

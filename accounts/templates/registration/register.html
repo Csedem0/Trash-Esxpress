@@ -133,7 +133,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
         <a href="{% url 'home' %}" class="navbar-brand p-0" style="display: flex; align-items: center;">
             <img src="{% static 'trash express img.png' %}" alt="Trash Express Logo" class="Image" style="width: 40px; height: auto; margin-right: 5px;">
-            <h1 class="m-0">Trash Express</h1>
+            <h1 class="m-0" style="color: #28a745;">Trash Express</h1>
         </a>
         
         
@@ -163,7 +163,7 @@
 
     <div class="diva-reg"> <!-- Div for registration form -->
         <div class="registration-form">
-            <h3>Register</h3>
+            <h3 style="color: #28a745;">Register</h3>
             <form method="post">
                 {% csrf_token %}
                 {{ form.username.label_tag }}
@@ -202,7 +202,8 @@
                     <p style="color: red;">{{ error }}</p>
                 {% endfor %}
             
-                <button>Register</button>
+                <button style="background-color: #28a745;">Register</button>
+                <a href="{% url 'login' %}">Already Have An Account? Login here</a>
                 <br><br>
                 <i>*Your password can’t be too similar to your other personal information.</i><br>
                 <i>*Your password must contain at least 8 characters.</i><br>

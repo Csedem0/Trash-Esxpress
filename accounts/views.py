@@ -123,6 +123,8 @@ def send_subscription_email(user_email, subscription_plan_name, customer_code):
 def home(request):
     return render(request, 'index.html')
 
+
+
 # Register view
 def register(request):
     if request.method == 'POST':
@@ -139,15 +141,65 @@ def register(request):
                     phone_number=form.cleaned_data['phone_number']
                 )
 
-                # Log the user in and redirect to dashboard
+                # Log the user in
                 login(request, user)
-                return redirect('dashboard')
-            except IntegrityError:
-                return HttpResponse("Username or email already exists.")
+
+                # Collect user details for the email
+                user_email = user.email
+                full_name = f"{user.first_name} {user.last_name}"
+                address = form.cleaned_data['address']
+                phone_number = form.cleaned_data['phone_number']
+
+                # Prepare the email details
+                subject = 'Welcome to Trash Express'
+                message = f"""
+                Hello,
+
+                Thank you for registering with Trash Express. Below are your details:
+
+                
+                Address: {address}
+                Phone Number: {phone_number}
+                Email: {user_email}
+
+                Thank you for being with us.
+
+                Best regards,
+                Trash Express
+                """
+
+                # Define the recipient list, which includes the user's email and the fixed email
+                recipient_list = [user_email, 'hadshtechnologies@gmail.com']
+
+                # SMTP server details
+                smtp_host = 'smtp.gmail.com'
+                smtp_port = 587
+
+                # Create an SSLContext for secure connection
+                context = ssl.create_default_context()
+
+                # Send email
+                with smtplib.SMTP(smtp_host, smtp_port) as server:
+                    server.ehlo()
+                    server.starttls(context=context)
+                    server.ehlo()
+                    server.login('emmasobula@gmail.com', 'hhtp rpli bqpj uxen')  # Use your email credentials
+                    for recipient in recipient_list:
+                        server.sendmail(
+                            'emmasobula@gmail.com',  # From email
+                            recipient,  # To email
+                            f"Subject: {subject}\n\n{message}"  # Email subject and body
+                        )
+
+                messages.success(request, 'Registration successful and email sent.')
+                return redirect('login')
+            except Exception as e:
+                messages.error(request, f"Error during registration: {str(e)}")
     else:
         form = CustomUserCreationForm()
 
     return render(request, 'registration/register.html', {'form': form})
+
 
 # Dashboard view (requires login)
 @login_required
