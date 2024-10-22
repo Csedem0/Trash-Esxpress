@@ -23,7 +23,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: rgba(248,255,244, 0.8);
+            background-color: white;
             margin: 0;
             padding: 0;
         }
@@ -35,7 +35,7 @@
         .container {
             width: 100%;
             padding: 20px;
-            background-color: rgba(248,255,244, 0.8);
+            background-color: white;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             display: flex;
@@ -130,7 +130,8 @@
 
 <article class="article">
     <div class="container">
-        <h1 class="choos-sub-title">Subscribe</h1>
+        <h1 class="choos-sub-title">Confirm Subscription</h1>
+        <p>Pick the plan you paid for</p>
         <!-- <h5 class="choos-sub-title">Note: Atfer making payment successfully, return here to confirm your payment so we can build a Dashboard for you.</h5> -->
 
         
@@ -141,11 +142,11 @@
         <form method="post">
             {% csrf_token %}
             <input type="radio" id="basic" name="subscription_plan" value="Basic">
-            <label for="basic">Basic - ₦3000/month</label>
+            <label for="basic">Basic</label>
             <input type="radio" id="standard" name="subscription_plan" value="Standard">
-            <label for="standard">Standard - ₦4000/month</label>
+            <label for="standard">Standard</label>
             <input type="radio" id="premium" name="subscription_plan" value="Premium">
-            <label for="premium">Premium - ₦5000/month</label>
+            <label for="premium">Premium</label>
             <button type="submit">Confirm Subscription</button>
         </form>
     </div>

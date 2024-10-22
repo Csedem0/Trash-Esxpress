@@ -173,9 +173,23 @@ def dashboard(request):
 @login_required
 def subscribe(request):
     user = request.user
+    today = timezone.now().date()
+
+    # Check if the user has an active subscription
+    user_subscription = UserSubscription.objects.filter(user=user, status='Active', end_date__gte=today).first()
+
+    # If the user has an active subscription, prevent access
+    if user_subscription:
+        messages.error(request, 'You already have an active subscription. No need to access the payment page.')
+        return redirect('dashboard')  # Redirect to dashboard or another page
 
     if request.method == 'POST':
         subscription_plan_name = request.POST.get('subscription_plan')
+        
+        if not subscription_plan_name:
+            messages.error(request, 'Please select a subscription plan.')
+            return render(request, 'subscribe.html')
+
         try:
             # Find the selected subscription plan
             subscription_plan = SubscriptionPlan.objects.get(name=subscription_plan_name)
@@ -185,8 +199,8 @@ def subscribe(request):
                 user=user,
                 defaults={
                     'plan': subscription_plan,
-                    'start_date': timezone.now().date(),
-                    'end_date': timezone.now().date() + timezone.timedelta(days=30),
+                    'start_date': today,
+                    'end_date': today + timezone.timedelta(days=30),
                     'status': 'Active'
                 }
             )
@@ -196,10 +210,14 @@ def subscribe(request):
 
             messages.success(request, 'Subscription plan updated successfully!')
             return redirect('home')
+
         except SubscriptionPlan.DoesNotExist:
             messages.error(request, 'Invalid subscription plan!')
+        except Exception as e:
+            messages.error(request, f"An unexpected error occurred: {str(e)}")
 
     return render(request, 'subscribe.html')
+
 
 # Custom Password Reset View
 class CustomPasswordResetView(PasswordResetView):
@@ -214,10 +232,29 @@ def custom_logout(request):
     logout(request)
     return redirect(reverse('home'))
 
-# Other simple views for rendering static pages
+
+from django.utils import timezone
+
 def payment(request):
+    user = request.user
+    today = timezone.now().date()
+
+    try:
+        # Check if the user has an active subscription
+        user_subscription = UserSubscription.objects.filter(user=user, status='Active', end_date__gte=today).first()
+
+        # If the user has an active subscription, prevent access
+        if user_subscription:
+            messages.error(request, 'You already have an active subscription. No need to access the payment page.')
+            return redirect('dashboard')  # Redirect to dashboard or another page
+
+    except UserSubscription.DoesNotExist:
+        # If no subscription exists, allow access to the payment page
+        pass
+
     return render(request, 'payment.html')
 
+# Other simple views for rendering static pages
 def details(request):
     return render(request, 'details.html')
 
