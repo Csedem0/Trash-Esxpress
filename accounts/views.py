@@ -5,28 +5,107 @@ from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 from django.db import IntegrityError
 from django.contrib import messages
-from django.http import HttpResponse
 from django.conf import settings
 import smtplib
 import ssl  # Import ssl module to use SSLContext for secure connections
 from .forms import CustomUserCreationForm, CustomPasswordResetForm
 from .models import UserProfile, SubscriptionPlan, UserSubscription
 from django.contrib.auth.views import PasswordResetView
-
-import smtplib
-import ssl
-from django.shortcuts import render, redirect
-from django.conf import settings
-from django.contrib import messages
 import random
 import string
+
+
+
+@login_required
+def subscribe(request):
+    user = request.user
+    # Check if the user already has an active subscription
+    if UserSubscription.objects.filter(user=user, status='Active').exists():
+        messages.warning(request, 'You already have an active subscription.')
+        return redirect('dashboard')
+
+    if request.method == 'POST':
+        subscription_plan_name = request.POST.get('subscription_plan')
+        try:
+            subscription_plan = SubscriptionPlan.objects.get(name=subscription_plan_name)
+
+            # Check if the UserProfile exists for the user; if not, create one
+            user_profile, created = UserProfile.objects.get_or_create(user=user)
+
+            # Create new user subscription
+            subscription = UserSubscription.objects.create(
+                user=user,
+                plan=subscription_plan,
+                start_date=timezone.now().date(),
+                end_date=timezone.now().date() + timezone.timedelta(days=30),  # Assuming one month duration
+                status='Active'  # Set status to Active
+            )
+
+            # Get the pickup code
+            pickup_code = subscription.pickup_code
+            
+            # Prepare the email details
+            subject = 'Trash Express Subscription Confirmation'
+            message = f"""
+            Dear {user.username},
+
+            Thank you for subscribing to our service. Here are your subscription details:
+
+            Subscription Plan: {subscription.plan.name}
+            Start Date: {subscription.start_date}
+            End Date: {subscription.end_date}
+            Pickup Code: {pickup_code}
+
+            Thank you for being with us!
+
+            Best regards,
+            Trash Express
+            """
+
+            # Define the recipient list
+            recipient_list = [user.email, 'hadshtechnologies@gmail.com']
+
+            # SMTP server details
+            smtp_host = 'smtp.gmail.com'
+            smtp_port = 587
+
+            # Create an SSLContext for secure connection
+            context = ssl.create_default_context()
+
+            try:
+                with smtplib.SMTP(smtp_host, smtp_port) as server:
+                    server.ehlo()
+                    server.starttls(context=context)
+                    server.ehlo()
+                    server.login('emmasobula@gmail.com', 'hhtp rpli bqpj uxen')  # Use your email credentials here
+                    for recipient in recipient_list:
+                        server.sendmail(
+                            settings.DEFAULT_FROM_EMAIL,
+                            recipient,
+                            f"Subject: {subject}\n\n{message}"
+                        )
+                messages.success(request, 'Subscription plan updated successfully! A confirmation email has been sent.')
+            except Exception as e:
+                messages.error(request, f'Failed to send email: {str(e)}')
+            
+            return redirect('dashboard')
+        except SubscriptionPlan.DoesNotExist:
+            messages.error(request, 'Invalid subscription plan!')
+            return redirect('subscribe')
+    else:
+        return render(request, 'subscribe.html')
+
+
+
+
+
 
 # Function to generate a random code
 def generate_random_code():
     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
 
-# View to handle the display of the form and sending the email
 
+# View to handle the display of the form and sending the email
 def send_mail_page(request):
     if request.method == 'POST':
         # Collect form data
@@ -41,8 +120,6 @@ def send_mail_page(request):
         # Prepare the email details
         subject = 'Trash Express Payment Confirmation and Details'
         message = f"""
-
-
         Dear {full_name},
 
         Thank you for providing your details. Below are your details:
@@ -59,70 +136,45 @@ def send_mail_page(request):
         Best regards,
         Trash Express
         """
-        
-        # Define the recipient list, which includes the user's email and the fixed email
+
+        # Define the recipient list, which includes the user's email and a fixed email
         recipient_list = [user_email, 'hadshtechnologies@gmail.com']
 
         # SMTP server details
-        smtp_host = 'smtp.gmail.com'  # Replace with your SMTP host
-        smtp_port = 587  # Replace with your SMTP port
+        smtp_host = 'smtp.gmail.com'
+        smtp_port = 587
 
         # Create an SSLContext for secure connection
         context = ssl.create_default_context()
 
         try:
             with smtplib.SMTP(smtp_host, smtp_port) as server:
-                server.ehlo()  # Identify yourself to the server
-                server.starttls(context=context)  # Secure the connection using SSLContext
-                server.ehlo()  # Re-identify after starting TLS
-                server.login('emmasobula@gmail.com', 'hhtp rpli bqpj uxen')  # Login with your email credentials
+                server.ehlo()
+                server.starttls(context=context)
+                server.ehlo()
+                server.login('emmasobula@gmail.com', 'hhtp rpli bqpj uxen')
                 for recipient in recipient_list:
                     server.sendmail(
-                        settings.DEFAULT_FROM_EMAIL,  # From email
-                        recipient,  # To email
-                        f"Subject: {subject}\n\n{message}"  # Email subject and body
+                        settings.DEFAULT_FROM_EMAIL,
+                        recipient,
+                        f"Subject: {subject}\n\n{message}"
                     )
                 messages.success(request, 'Email sent successfully.')
         except Exception as e:
             messages.error(request, f'Failed to send email: {str(e)}')
 
-        return redirect('home')  # Redirect back to home after sending the email
+        return redirect('home')
 
-    # Render the email form page if GET request
     return render(request, 'send_mail_page.html')
 
 
 
-# Function to send subscription confirmation email using SSLContext
-def send_subscription_email(user_email, subscription_plan_name, customer_code):
-    subject = f'Your Subscription to {subscription_plan_name} on Trash Express'
-    message = f'Thank you for subscribing to {subscription_plan_name}! Your customer code is {customer_code}.'
-    from_email = settings.DEFAULT_FROM_EMAIL
-    recipient_list = [user_email, 'hadshtechnologies@gmail.com']
 
 
-    # SMTP server details
-    smtp_host = 'smtp.gmail.com'  # Replace with your SMTP host
-    smtp_port = 587  # Replace with your SMTP port
-
-    # Create an SSLContext for secure connection
-    context = ssl.create_default_context()
-
-    try:
-        with smtplib.SMTP(smtp_host, smtp_port) as server:
-            server.ehlo()  # Identify yourself to the server
-            server.starttls(context=context)  # Secure the connection using the SSLContext
-            server.ehlo()  # Re-identify after starting TLS
-            server.login('emmasobula@gmail.com', 'hhtp rpli bqpj uxen')  # Login with your email credentials
-            server.sendmail(from_email, recipient_list, f"Subject: {subject}\n\n{message}")
-            print('Subscription email sent!')
-    except Exception as e:
-        print(f'Failed to send email: {str(e)}')
 
 # Homepage view
 def home(request):
     return render(request, 'index.html')
-
 
 
 # Register view
@@ -131,7 +183,6 @@ def register(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             try:
-                # Create user and save profile information
                 user = form.save(commit=False)
                 user.save()
 
@@ -141,54 +192,43 @@ def register(request):
                     phone_number=form.cleaned_data['phone_number']
                 )
 
-                # Log the user in
                 login(request, user)
 
-                # Collect user details for the email
                 user_email = user.email
                 full_name = f"{user.first_name} {user.last_name}"
                 address = form.cleaned_data['address']
                 phone_number = form.cleaned_data['phone_number']
 
-                # Prepare the email details
                 subject = 'Welcome to Trash Express'
                 message = f"""
-                Hello,
+                Hello {full_name},
 
                 Thank you for registering with Trash Express. Below are your details:
 
-                
                 Address: {address}
                 Phone Number: {phone_number}
                 Email: {user_email}
-
-                Thank you for being with us.
 
                 Best regards,
                 Trash Express
                 """
 
-                # Define the recipient list, which includes the user's email and the fixed email
                 recipient_list = [user_email, 'hadshtechnologies@gmail.com']
 
-                # SMTP server details
                 smtp_host = 'smtp.gmail.com'
                 smtp_port = 587
-
-                # Create an SSLContext for secure connection
                 context = ssl.create_default_context()
 
-                # Send email
                 with smtplib.SMTP(smtp_host, smtp_port) as server:
                     server.ehlo()
                     server.starttls(context=context)
                     server.ehlo()
-                    server.login('emmasobula@gmail.com', 'hhtp rpli bqpj uxen')  # Use your email credentials
+                    server.login('emmasobula@gmail.com', 'hhtp rpli bqpj uxen')
                     for recipient in recipient_list:
                         server.sendmail(
-                            'emmasobula@gmail.com',  # From email
-                            recipient,  # To email
-                            f"Subject: {subject}\n\n{message}"  # Email subject and body
+                            'emmasobula@gmail.com',
+                            recipient,
+                            f"Subject: {subject}\n\n{message}"
                         )
 
                 messages.success(request, 'Registration successful and email sent.')
@@ -207,10 +247,8 @@ def dashboard(request):
     user = request.user
     today = timezone.now().date()
 
-    # Fetch the user's active subscriptions and update the remaining days
     user_subscriptions = UserSubscription.objects.filter(user=user)
     
-    # Add remaining_days calculation for each subscription
     for subscription in user_subscriptions:
         if subscription.end_date >= today:
             subscription.remaining_days = (subscription.end_date - today).days
@@ -221,54 +259,8 @@ def dashboard(request):
 
     return render(request, 'dashboard.html', {'user_subscriptions': user_subscriptions})
 
-# Subscription view (requires login)
-@login_required
-def subscribe(request):
-    user = request.user
-    today = timezone.now().date()
 
-    # Check if the user has an active subscription
-    user_subscription = UserSubscription.objects.filter(user=user, status='Active', end_date__gte=today).first()
 
-    # If the user has an active subscription, prevent access
-    if user_subscription:
-        messages.error(request, 'You already have an active subscription. No need to access the payment page.')
-        return redirect('dashboard')  # Redirect to dashboard or another page
-
-    if request.method == 'POST':
-        subscription_plan_name = request.POST.get('subscription_plan')
-        
-        if not subscription_plan_name:
-            messages.error(request, 'Please select a subscription plan.')
-            return render(request, 'subscribe.html')
-
-        try:
-            # Find the selected subscription plan
-            subscription_plan = SubscriptionPlan.objects.get(name=subscription_plan_name)
-
-            # Update or create a new subscription for the user
-            user_subscription, created = UserSubscription.objects.update_or_create(
-                user=user,
-                defaults={
-                    'plan': subscription_plan,
-                    'start_date': today,
-                    'end_date': today + timezone.timedelta(days=30),
-                    'status': 'Active'
-                }
-            )
-
-            # Send the subscription confirmation email
-            send_subscription_email(user.email, subscription_plan.name, user_subscription.customer_code)
-
-            messages.success(request, 'Subscription plan updated successfully!')
-            return redirect('home')
-
-        except SubscriptionPlan.DoesNotExist:
-            messages.error(request, 'Invalid subscription plan!')
-        except Exception as e:
-            messages.error(request, f"An unexpected error occurred: {str(e)}")
-
-    return render(request, 'subscribe.html')
 
 
 # Custom Password Reset View
@@ -279,34 +271,33 @@ class CustomPasswordResetView(PasswordResetView):
     email_template_name = 'registration/password_reset_email.html'
     success_url = reverse_lazy('password_reset_done')
 
+
 # Logout view
 def custom_logout(request):
     logout(request)
     return redirect(reverse('home'))
 
 
-from django.utils import timezone
-
+# Payment view (requires login)
+@login_required
 def payment(request):
     user = request.user
     today = timezone.now().date()
 
     try:
-        # Check if the user has an active subscription
         user_subscription = UserSubscription.objects.filter(user=user, status='Active', end_date__gte=today).first()
 
-        # If the user has an active subscription, prevent access
         if user_subscription:
-            messages.error(request, 'You already have an active subscription. No need to access the payment page.')
-            return redirect('dashboard')  # Redirect to dashboard or another page
+            messages.error(request, 'You already have an active subscription.')
+            return redirect('dashboard')
 
     except UserSubscription.DoesNotExist:
-        # If no subscription exists, allow access to the payment page
         pass
 
     return render(request, 'payment.html')
 
-# Other simple views for rendering static pages
+
+# Other views for static pages
 def details(request):
     return render(request, 'details.html')
 

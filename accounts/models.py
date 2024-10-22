@@ -36,7 +36,13 @@ class UserSubscription(models.Model):
     def save(self, *args, **kwargs):
         if not self.customer_code or self.customer_code == 'SUB_DEFAULT':
             self.customer_code = generate_unique_code()
+
+        # Ensure that pickup_code is unique, if not already generated
+        if not self.pickup_code or self.pickup_code == 'PICKUP_DEFAULT':
+            self.pickup_code = generate_unique_code()
+
         super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.user.username}'s Subscription to {self.plan.name}"
+
