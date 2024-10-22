@@ -160,19 +160,5 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 
-
-
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-
-# Celery configuration
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-
 # Redirect URLs
 LOGIN_REDIRECT_URL = '/accounts/subscribe/'
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
