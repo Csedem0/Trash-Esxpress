@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-import dj_database_url
 import os
 from pathlib import Path
 
@@ -158,7 +157,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'emmasobula@gmail.com'  # Your Gmail address
 EMAIL_HOST_PASSWORD = 'hhtp rpli bqpj uxen'  # Use the App Password here
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
 
 
 
