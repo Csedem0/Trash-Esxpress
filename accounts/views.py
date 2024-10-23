@@ -119,7 +119,7 @@ def subscribe(request):
                     server.ehlo()
                     server.starttls(context=context)
                     server.ehlo()
-                    server.login('emmasobula@gmail.com', 'hhtp rpli bqpj uxen')  # Use your email credentials here
+                    server.login('hadshtechnologies@gmail.com', 'wuwv mhdx qxte tymm')  # Use your email credentials here
                     
                     # Send email to the user (without pickup codes)
                     server.sendmail(
@@ -215,7 +215,7 @@ def send_mail_page(request):
                 server.ehlo()
                 server.starttls(context=context)
                 server.ehlo()
-                server.login('emmasobula@gmail.com', 'hhtp rpli bqpj uxen')
+                server.login('hadshtechnologies@gmail.com', 'wuwv mhdx qxte tymm') 
                 for recipient in recipient_list:
                     server.sendmail(
                         settings.DEFAULT_FROM_EMAIL,
@@ -286,10 +286,10 @@ def register(request):
                     server.ehlo()
                     server.starttls(context=context)
                     server.ehlo()
-                    server.login('emmasobula@gmail.com', 'hhtp rpli bqpj uxen')
+                    server.login('hadshtechnologies@gmail.com', 'wuwv mhdx qxte tymm') 
                     for recipient in recipient_list:
                         server.sendmail(
-                            'emmasobula@gmail.com',
+                            'hadshtechnologies@gmail.com',
                             recipient,
                             f"Subject: {subject}\n\n{message}"
                         )

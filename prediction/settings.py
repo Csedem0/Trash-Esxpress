@@ -21,16 +21,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = os.environ.get("SECRET_KEY")
-SECRET_KEY = '_<xbgbgV|\'@!i|=fNnKe[Dv$;GUjcA)mMd=ZUO;PE{LlO\\;<P5'
+SECRET_KEY = os.environ.get("SECRET_KEY")
+# SECRET_KEY = '_<xbgbgV|\'@!i|=fNnKe[Dv$;GUjcA)mMd=ZUO;PE{LlO\\;<P5'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 DEBUG = True  # Set to False in production
 
-# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(" ")
-ALLOWED_HOSTS =  ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(" ")
+# ALLOWED_HOSTS =  ['localhost', '127.0.0.1']
 
 # Application definition
 
@@ -155,8 +155,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'emmasobula@gmail.com'  # Your Gmail address
-EMAIL_HOST_PASSWORD = 'hhtp rpli bqpj uxen'  # Use the App Password here
+EMAIL_HOST_USER = 'hadshtechnologies@gmail.com'  # Your Gmail address
+EMAIL_HOST_PASSWORD = 'wuwv mhdx qxte tymm'  # Use the App Password here
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
