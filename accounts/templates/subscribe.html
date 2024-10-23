@@ -128,29 +128,58 @@
 <body>
 
 
-<article class="article">
-    <div class="container">
-        <h1 class="choos-sub-title">Confirm Subscription</h1>
-        <p>Pick the plan you paid for</p>
-        <!-- <h5 class="choos-sub-title">Note: Atfer making payment successfully, return here to confirm your payment so we can build a Dashboard for you.</h5> -->
-
-        
-
-        <!-- <h2 class="choos-sub-title">Confirm the Plan you paid for to access you Dashboard</h2> -->
-        <!-- <h5 class="choos-sub-title">Note: If you confirm without making payment, you Dashbord created will be Terminated in less than a day.</h5> -->
-
-        <form method="post">
-            {% csrf_token %}
-            <input type="radio" id="basic" name="subscription_plan" value="Basic">
-            <label for="basic">Basic</label>
-            <input type="radio" id="standard" name="subscription_plan" value="Standard">
-            <label for="standard">Standard</label>
-            <input type="radio" id="premium" name="subscription_plan" value="Premium">
-            <label for="premium">Premium</label>
-            <button type="submit">Confirm Subscription</button>
-        </form>
-    </div>
-</article>
+    <article class="article">
+        <div class="container">
+            <form id="confirm-subscription-form" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="subscription_plan" id="subscription_plan" value="">
+                <h1 id="plan-display" class="choos-sub-title"></h1>  <!-- Display the selected plan here -->
+                <button type="submit" id="confirm-button">Confirm Subscription</button>
+            </form>
+        </div>
+    </article>
+    
+    <script>
+        // Retrieve the selected plan from local storage
+        const selectedPlan = localStorage.getItem('selectedPlan');
+        const confirmButton = document.getElementById('confirm-button');
+    
+        if (selectedPlan) {
+            document.getElementById('subscription_plan').value = selectedPlan;  // Set the hidden input value
+            document.getElementById('plan-display').innerText = `You have selected the ${selectedPlan} plan.`;
+        } else {
+            document.getElementById('plan-display').innerText = 'No plan selected, GO BACK!!!.';
+        }
+    
+        // Check if the button should be hidden on page load
+        window.onload = function() {
+            const hiddenUntil = localStorage.getItem('confirmButtonHiddenUntil');
+            if (hiddenUntil && Date.now() < hiddenUntil) {
+                confirmButton.style.display = 'none'; // Hide the button
+            }
+        };
+    
+        // Event listener for the form submission
+        document.getElementById('confirm-subscription-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+    
+            // Clear local storage
+            localStorage.removeItem('selectedPlan');
+    
+            // Disable and hide the confirm button
+            confirmButton.disabled = true;
+            confirmButton.style.display = 'none';  // Hide the button
+    
+            // Store the current time + 1 hour in local storage
+            localStorage.setItem('confirmButtonHiddenUntil', Date.now() + 3600000); // 1 hour in milliseconds
+    
+            // Submit the form programmatically
+            this.submit();
+        });
+    </script>
+    
+    
+    
 
 
 </body>

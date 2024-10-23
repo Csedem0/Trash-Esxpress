@@ -9,11 +9,11 @@
 
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Trash Express" name="keywords">
-    <meta content="Number One Waste Collection Service In Port Harcourt" name="description">">
+    <meta content="Number One Waste Collection Service In Port Harcourt" name="description">
 
     <!-- Favicon -->
     <link rel="icon" href="{% static 'trash express img.png' %}">
-    <link rel="stylesheet" href="{% static 'carts.css' %}">
+    <link rel="stylesheet" href="{% static 'buckets.css' %}">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,11 +46,11 @@
     </script>
     <noscript> Powered by <a href=“https://www.smartsupp.com” target=“_blank”>Smartsupp</a></noscript>
 </head>
+
 <body>
   
 
            <!--Header section-->
-    <header>
 
       <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
@@ -64,13 +64,13 @@
                 <span class="fa fa-bars"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
-              <div class="navbar-nav ms-auto py-0">
-                <a href="{% url 'home' %}" class="nav-item nav-link active">Home</a>
-                <a href="{% url 'about' %}" class="nav-item nav-link active">About</a>
-                <a href="{% url 'services' %}" class="nav-item nav-link active">Services</a>
-                
-                <a href="{% url 'contact' %}" class="nav-item nav-link active">Contact</a>
-            </div>
+                <div class="navbar-nav ms-auto py-0">
+                    <a href="{% url 'home' %}" class="nav-item nav-link active">Home</a>
+                    <a href="{% url 'about' %}" class="nav-item nav-link active">About</a>
+                    <a href="{% url 'services' %}" class="nav-item nav-link active">Services</a>
+                    
+                    <a href="{% url 'contact' %}" class="nav-item nav-link active">Contact</a>
+                </div>
                 <!-- <butaton type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton>
                 <a href="https://htmlcodex.com/startup-company-website-template" class="btn btn-primary py-2 px-4 ms-3">Download Pro Version</a> -->
             </div>
@@ -250,8 +250,12 @@
           name="tx_ref" 
           value="txref-81124"/>
 
+          
+          <input type="hidden" name="redirect_url" value="https://trash-esxpress.onrender.com/accounts/send_mail_page/"/>
+          <input type="hidden" name="customer[email]" value="hadshtechnologies@gmail.com"/>
 
-             <select name="quantity" onchange="ttalPrice(this.value)">
+
+             <select name="quantity" onchange="ttalPrice(this.value)" style="margin-left: 45px;">
                <option>0</option>
                <!-- <option>1</option> -->
                <option>2</option>
@@ -307,6 +311,7 @@
              </select>
              <label>Total Price:</label>
              <input type="text" name="amount" id="ttal" readonly>
+             
 
 
              <input type="hidden" name="currency" value="NGN"/>
@@ -315,8 +320,6 @@
              
 
 
-             <input type="hidden" name="redirect_url" value="https://trash-esxpress.onrender.com/accounts/send_mail_page/"/>
-           <input type="hidden" name="customer[email]" value="hadshtechnologies@gmail.com"/>
 
 
 
@@ -365,7 +368,7 @@
             value="txref-81124"/>
    
 
-             <select name="quantity" onchange="talPrice(this.value)">
+             <select name="quantity" onchange="talPrice(this.value)" style="margin-left: 45px;">
 
               <option>0</option>
               <option>1</option>
@@ -479,7 +482,7 @@
 
 
 
-          <select name="quantity" onchange="totalPrice(this.value)">
+          <select name="quantity" onchange="totalPrice(this.value)" style="margin-left: 45px;">
             <option>0</option>
             <option>1</option>
             <option>2</option>
@@ -601,7 +604,7 @@
 
 
 
-      <select name="quantity" onchange="Price(this.value)">
+      <select name="quantity" onchange="Price(this.value)" style="margin-left: 45px;">
         <option>0</option>
         <option>1</option>
         <option>2</option>

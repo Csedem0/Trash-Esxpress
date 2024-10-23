@@ -140,7 +140,6 @@
             <h5 class="fw-bold text-primary text-uppercase">Welcome {{ request.user.username }}!</h5>
         </div>
 
-        <!-- <p>No current subscription? <a class="" href="{% url 'subscribe' %}">Subscribe Here!</a></p> -->
         
         <div class="row g-0">
             <!-- Subscription Card -->
@@ -154,23 +153,58 @@
                         <input type="hidden" name="public_key" value="FLWPUBK_TEST-81f402966fb86eb3ff2b3a387aabea96-X">
                         <input type="hidden" name="tx_ref" value="bitethtx-019203" />
                         
-                        <!-- Add a select dropdown for the amount -->
+                        <!-- Dropdown for plan selection -->
                         <div class="mb-3">
-                            <label for="amount" class="form-label" style="color: black;">Select Your Plan</label>
-                            <select name="amount" id="amount" class="form-select">
-                                <option value="3800">Basic</option>
-                                <option value="5000">Standard</option>
-                                <option value="6500">Premium</option>
+                            <label for="plan" class="form-label" style="color: black;">Select Your Plan</label>
+                            <select name="plan" id="plan" class="form-select" onchange="updateAmountAndPlan()">
+                                <option value="Basic" data-amount="3800">Basic - ₦3,800</option>
+                                <option value="Standard" data-amount="5000">Standard - ₦5,000</option>
+                                <option value="Premium" data-amount="6500">Premium - ₦6,500</option>
                             </select>
                         </div>
-
+                        
+                        <!-- Hidden amount field to pass to Flutterwave -->
+                        <input type="hidden" name="amount" id="amount" value="3800" />
+                        
                         <input type="hidden" name="currency" value="NGN" />
                         <input type="hidden" name="meta[token]" value="54" />
                         <input type="hidden" name="customer[name]" value="Trash Express" />
-                        <input type="hidden" name="customer[email]" value="hadshtechnologies@gmail.com"/>
-                        <input type="hidden" name="redirect_url" value="https://trash-esxpress.onrender.com/accounts/subscribe/"/>
-                        <button type="submit" class="btn btn-primary py-2 px-4 mt-4">Make Payment</button>
+                        <input type="hidden" name="customer[email]" value="hadshtechnologies@gmail.com" />
+                        
+                        <!-- Pass the selected plan to the subscription page -->
+                        <input type="hidden" name="selected_plan" id="selected_plan" value="" />
+                        
+                        <!-- Redirect to dashboard after payment -->
+                        <input type="hidden" name="redirect_url" value="https://trash-esxpress.onrender.com/accounts/subscribe/" />
+                        
+                        <button type="submit" class="btn btn-primary py-2 px-4 mt-4" onclick="savePlanToLocalStorage()">Make Payment</button>
                     </form>
+                    
+                    <script>
+                        function updateAmountAndPlan() {
+                            const planSelect = document.getElementById('plan');
+                            const selectedOption = planSelect.options[planSelect.selectedIndex];
+                            
+                            // Update the amount field with the selected plan's amount
+                            const amountInput = document.getElementById('amount');
+                            amountInput.value = selectedOption.getAttribute('data-amount');
+                            
+                            // Set the selected plan value
+                            const selectedPlanInput = document.getElementById('selected_plan');
+                            selectedPlanInput.value = selectedOption.value;
+                    
+                            // Save the selected plan to localStorage for use on the confirmation page
+                            localStorage.setItem('selectedPlan', selectedOption.value);
+                        }
+                    
+                        function savePlanToLocalStorage() {
+                            updateAmountAndPlan();
+                        }
+                    </script>
+                    
+                    
+                    
+                    
                 </div>
             </div>
 

@@ -152,9 +152,12 @@
                             <h5>{{ subscription.plan.name }} Plan</h5>
                             <p>Start Date: {{ subscription.start_date }}</p>
                             <p>End Date: {{ subscription.end_date }}</p>
+                            <h5 class="text-primary mb-1">Pick-up Code: {{ subscription.pickup_code }}</h5>
+                            {% if subscription.dummy_code_to_show %}
+                                <h5 class="text-danger mb-1">Dummy Pick-up Code: {{ subscription.dummy_code_to_show }}</h5>
+                            {% endif %}
                             {% endfor %}
                         </div>
-                        
                     </div>
                 </div>
     

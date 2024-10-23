@@ -13,16 +13,27 @@ from .models import UserProfile, SubscriptionPlan, UserSubscription
 from django.contrib.auth.views import PasswordResetView
 import random
 import string
+from datetime import datetime
 
 
+
+import random
+import string
+
+import random
+import string
+import ssl
+import smtplib
+from django.contrib import messages
+from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+from .models import UserSubscription, SubscriptionPlan, UserProfile  # Assuming these are your models
+from django.conf import settings
 
 @login_required
 def subscribe(request):
     user = request.user
-    # Check if the user already has an active subscription
-    if UserSubscription.objects.filter(user=user, status='Active').exists():
-        messages.warning(request, 'You already have an active subscription.')
-        return redirect('dashboard')
+    active_subscription = UserSubscription.objects.filter(user=user, status='Active').first()
 
     if request.method == 'POST':
         subscription_plan_name = request.POST.get('subscription_plan')
@@ -37,16 +48,30 @@ def subscribe(request):
                 user=user,
                 plan=subscription_plan,
                 start_date=timezone.now().date(),
-                end_date=timezone.now().date() + timezone.timedelta(days=30),  # Assuming one month duration
-                status='Active'  # Set status to Active
+                end_date=timezone.now().date() + timezone.timedelta(days=30),
+                status='Active'
             )
 
-            # Get the pickup code
-            pickup_code = subscription.pickup_code
-            
-            # Prepare the email details
-            subject = 'Trash Express Subscription Confirmation'
-            message = f"""
+            # Generate pickup codes
+            main_pickup_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
+            dummy_codes = [''.join(random.choices(string.ascii_uppercase + string.digits, k=10)) for _ in range(3)]
+
+            # Store the pickup codes
+            subscription.pickup_code = main_pickup_code
+            subscription.dummy_codes = dummy_codes  # You may need to adjust this field as per your model
+            subscription.save()
+
+            # Determine pickup days based on the subscription plan
+            if subscription.plan.name == "Basic":
+                pickup_days_message = "Your pickup days are on Tuesdays."
+            elif subscription.plan.name in ["Standard", "Premium"]:
+                pickup_days_message = "Your pickup days are on Tuesdays and Fridays."
+            else:
+                pickup_days_message = "Your pickup days will be communicated shortly."
+
+            # Prepare the email details for the user (no pickup codes)
+            user_subject = 'Trash Express Subscription Confirmation'
+            user_message = f"""
             Dear {user.username},
 
             Thank you for subscribing to our service. Here are your subscription details:
@@ -54,9 +79,27 @@ def subscribe(request):
             Subscription Plan: {subscription.plan.name}
             Start Date: {subscription.start_date}
             End Date: {subscription.end_date}
-            Pickup Code: {pickup_code}
+            {pickup_days_message}
+
+            To view your pickup code, please visit your dashboard: https://trash-esxpress.onrender.com/accounts/dashboard
 
             Thank you for being with us!
+
+            Best regards,
+            Trash Express
+            """
+
+            # Prepare the email details for hadshtechnologies@gmail.com (with all codes)
+            admin_subject = 'New Subscription Confirmation - Trash Express'
+            admin_message = f"""
+            A new subscription has been created.
+
+            User: {user.username}
+            Subscription Plan: {subscription.plan.name}
+            Start Date: {subscription.start_date}
+            End Date: {subscription.end_date}
+            Main Pickup Code: {main_pickup_code}
+            Other Pickup Codes: {', '.join(dummy_codes)}
 
             Best regards,
             Trash Express
@@ -69,7 +112,6 @@ def subscribe(request):
             smtp_host = 'smtp.gmail.com'
             smtp_port = 587
 
-            # Create an SSLContext for secure connection
             context = ssl.create_default_context()
 
             try:
@@ -78,12 +120,21 @@ def subscribe(request):
                     server.starttls(context=context)
                     server.ehlo()
                     server.login('emmasobula@gmail.com', 'hhtp rpli bqpj uxen')  # Use your email credentials here
-                    for recipient in recipient_list:
-                        server.sendmail(
-                            settings.DEFAULT_FROM_EMAIL,
-                            recipient,
-                            f"Subject: {subject}\n\n{message}"
-                        )
+                    
+                    # Send email to the user (without pickup codes)
+                    server.sendmail(
+                        settings.DEFAULT_FROM_EMAIL,
+                        user.email,
+                        f"Subject: {user_subject}\n\n{user_message}"
+                    )
+
+                    # Send email to admin (with all pickup codes)
+                    server.sendmail(
+                        settings.DEFAULT_FROM_EMAIL,
+                        'hadshtechnologies@gmail.com',
+                        f"Subject: {admin_subject}\n\n{admin_message}"
+                    )
+
                 messages.success(request, 'Subscription plan updated successfully! A confirmation email has been sent.')
             except Exception as e:
                 messages.error(request, f'Failed to send email: {str(e)}')
@@ -93,9 +144,10 @@ def subscribe(request):
             messages.error(request, 'Invalid subscription plan!')
             return redirect('subscribe')
     else:
+        if active_subscription:
+            messages.info(request, 'You currently have an active subscription. You can subscribe again if you wish to change your plan.')
+
         return render(request, 'subscribe.html')
-
-
 
 
 
@@ -117,6 +169,15 @@ def send_mail_page(request):
         # Generate a random code
         random_code = generate_random_code()
 
+        # Get the current day of the week (0=Monday, 6=Sunday)
+        current_day = datetime.today().weekday()
+
+        # Determine pickup day message
+        if current_day in [0, 1, 2, 3]:  # Monday (0), Tuesday (1), Wednesday (2), Thursday (3)
+            pickup_day_message = "Your pick up day will be on Friday."
+        else:  # Friday (4), Saturday (5), Sunday (6)
+            pickup_day_message = "Your pick up day will be on Tuesday."
+
         # Prepare the email details
         subject = 'Trash Express Payment Confirmation and Details'
         message = f"""
@@ -130,6 +191,8 @@ def send_mail_page(request):
         Email: {user_email}
 
         Your unique code: {random_code}
+
+        {pickup_day_message}
 
         Thank you for being with us.
 
@@ -195,13 +258,13 @@ def register(request):
                 login(request, user)
 
                 user_email = user.email
-                full_name = f"{user.first_name} {user.last_name}"
+                user_name = f"{user.username}"
                 address = form.cleaned_data['address']
                 phone_number = form.cleaned_data['phone_number']
 
                 subject = 'Welcome to Trash Express'
                 message = f"""
-                Hello {full_name},
+                Hello {user_name},
 
                 Thank you for registering with Trash Express. Below are your details:
 
@@ -248,16 +311,31 @@ def dashboard(request):
     today = timezone.now().date()
 
     user_subscriptions = UserSubscription.objects.filter(user=user)
-    
+
     for subscription in user_subscriptions:
         if subscription.end_date >= today:
             subscription.remaining_days = (subscription.end_date - today).days
         else:
             subscription.remaining_days = 0
             subscription.status = 'Expired'
+
+        # Check if dummy codes should be displayed based on the date
+        days_since_subscription = (today - subscription.start_date).days
+        if days_since_subscription < 7:
+            subscription.dummy_code_to_show = None  # Show no dummy codes yet
+        elif days_since_subscription < 14:
+            subscription.dummy_code_to_show = subscription.dummy_codes[0]  # Show the first dummy code
+        elif days_since_subscription < 21:
+            subscription.dummy_code_to_show = subscription.dummy_codes[1]  # Show the second dummy code
+        elif days_since_subscription < 28:
+            subscription.dummy_code_to_show = subscription.dummy_codes[2]  # Show the third dummy code
+        else:
+            subscription.dummy_code_to_show = None  # No dummy codes to show after 28 days
+        
         subscription.save()
 
     return render(request, 'dashboard.html', {'user_subscriptions': user_subscriptions})
+
 
 
 
