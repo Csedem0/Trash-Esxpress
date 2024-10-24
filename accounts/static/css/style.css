@@ -160,9 +160,9 @@ h6,
         display: none;
     }
 
-    .facts{
+    /* .facts{
         display: none;
-    }
+    } */
 
     .sticky-top.navbar-dark {
         position: relative;
@@ -464,7 +464,7 @@ h6,
 
 
 /*** Miscellaneous ***/
-@media (min-width: 991.98px) {
+@media (min-width: 300px) {
     .facts {
         position: relative;
         margin-top: -75px;

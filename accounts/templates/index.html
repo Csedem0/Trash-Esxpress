@@ -166,46 +166,79 @@
 <div class="container-fluid facts py-5 pt-lg-0">
     <div class="container py-5 pt-lg-0">
         <div class="row gx-0">
-            <div class="col-lg-4 wow zoomIn" data-wow-delay="0.1s">
-                <div class="bg-success shadow d-flex align-items-center justify-content-center p-4" style="height: 150px;">
-                    <div class="bg-white d-flex align-items-center justify-content-center rounded mb-2" style="width: 60px; height: 60px;">
-                        <i class="fa fa-users text-success"></i>
+            <div class="col-4 wow zoomIn" data-wow-delay="0.1s">
+                <div class="bg-success shadow d-flex align-items-center justify-content-center p-3 fact-container" style="height: 150px;">
+                    <div class="bg-white d-flex align-items-center justify-content-center rounded mb-2 icon-container" style="width: 50px; height: 50px;">
+                        <i class="fa fa-users text-success" style="font-size: 20px;"></i>
                     </div>
-                    <div class="ps-4">
-                        <h5 class="text-white mb-0">Happy Clients</h5>
-                        <h1 class="text-white mb-0" data-toggle="counter-up">100</h1>
-                        <h3 class="text-white mb-0" data-toggle="">Plus</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 wow zoomIn" data-wow-delay="0.3s">
-                <div class="bg-light shadow d-flex align-items-center justify-content-center p-4" style="height: 150px;">
-                    <div class="bg-success d-flex align-items-center justify-content-center rounded mb-2" style="width: 60px; height: 60px;">
-                        <i class="fa fa-check text-white"></i>
-                    </div>
-                    <div class="ps-4">
-                        <h5 class="text-success mb-0">Active Customers</h5>
-                        <h1 class="mb-0" data-toggle="counter-up">100</h1>
-                        <h3 class="mb-0" data-toggle="">Plus</h3>
+                    <div class="ps-3">
+                        <h5 class="text-white mb-0" style="font-size: 14px;">Happy Clients</h5>
+                        <h1 class="text-white mb-0" data-toggle="counter-up" style="font-size: 24px;">100</h1>
+                        <h3 class="text-white mb-0" data-toggle="" style="font-size: 16px;">Plus</h3>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 wow zoomIn" data-wow-delay="0.6s">
-                <div class="bg-success shadow d-flex align-items-center justify-content-center p-4" style="height: 150px;">
-                    <div class="bg-white d-flex align-items-center justify-content-center rounded mb-2" style="width: 60px; height: 60px;">
-                        <i class="fa fa-award text-success"></i>
+            <div class="col-4 wow zoomIn" data-wow-delay="0.3s">
+                <div class="bg-light shadow d-flex align-items-center justify-content-center p-3 fact-container" style="height: 150px;">
+                    <div class="bg-success d-flex align-items-center justify-content-center rounded mb-2 icon-container" style="width: 50px; height: 50px;">
+                        <i class="fa fa-check text-white" style="font-size: 20px;"></i>
                     </div>
-                    <div class="ps-4">
-                        <h5 class="text-white mb-0">Reviews</h5>
-                        <h1 class="text-white mb-0" data-toggle="counter-up">50</h1>
-                        <h3 class="text-white mb-0" data-toggle="">Plus</h3>
+                    <div class="ps-3">
+                        <h5 class="text-success mb-0" style="font-size: 14px;">Active Customers</h5>
+                        <h1 class="mb-0" data-toggle="counter-up" style="font-size: 24px;">100</h1>
+                        <h3 class="mb-0" data-toggle="" style="font-size: 16px;">Plus</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 wow zoomIn" data-wow-delay="0.6s">
+                <div class="bg-success shadow d-flex align-items-center justify-content-center p-3 fact-container" style="height: 150px;">
+                    <div class="bg-white d-flex align-items-center justify-content-center rounded mb-2 icon-container" style="width: 50px; height: 50px;">
+                        <i class="fa fa-award text-success" style="font-size: 20px;"></i>
+                    </div>
+                    <div class="ps-3">
+                        <h5 class="text-white mb-0" style="font-size: 14px;">Reviews</h5>
+                        <h1 class="text-white mb-0" data-toggle="counter-up" style="font-size: 24px;">50</h1>
+                        <h3 class="text-white mb-0" data-toggle="" style="font-size: 16px;">Plus</h3>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Responsive Media Query -->
+<style>
+    @media (max-width: 768px) {
+        .fact-container {
+            height: 100px !important; /* Reduce height for mobile */
+        }
+        .fact-container h1 {
+            font-size: 20px !important; /* Reduce h1 size */
+        }
+        .fact-container h5 {
+            font-size: 12px !important; /* Reduce h5 size */
+        }
+        .fact-container h3 {
+            font-size: 14px !important; /* Reduce h3 size */
+        }
+        .icon-container {
+            width: 40px !important; /* Reduce icon container size */
+            height: 20px !important;
+            margin-right: 5px !important; /* Increase spacing */
+            padding: 5px;
+        }
+        .icon-container i {
+            font-size: 16px !important; /* Reduce icon size */
+        }
+    }
+</style>
 <!-- Facts End -->
+
+
+
+
+
+
 
 <a id="subscribe">
 <!-- Pricing Plan Start -->
