@@ -16,7 +16,13 @@ import string
 from datetime import datetime
 
 
-
+import ssl
+import smtplib
+from django.shortcuts import render, redirect
+from django.conf import settings
+from django.contrib import messages
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 import random
 import string
 
@@ -373,6 +379,91 @@ def payment(request):
         pass
 
     return render(request, 'payment.html')
+
+
+
+def collector_pickup(request):
+    if request.method == 'POST':
+        # Collect form data
+        collector_email = request.POST.get('email')
+        pickup_code = request.POST.get('pickup_code')
+
+        # Validate email format
+        try:
+            validate_email(collector_email)
+        except ValidationError:
+            messages.error(request, 'Please enter a valid email address.')
+            return render(request, 'collector_pickup_form.html')
+
+        # Prepare the email details
+        subject = 'Trash Express Pickup Code Confirmation'
+        message = f"""
+        Dear Waste Collector,
+
+        Please note: Below is the pickup code you submitted, ensure it is accurate because wrong pickup code leads to no pay for that pickup!
+
+        Pickup Code: {pickup_code}
+
+        Thank you for your service.
+
+        Best regards,
+        Trash Express
+        """
+
+        # Admin email message
+        admin_message = f"""
+        A waste collector has submitted a pickup code.
+
+        Email: {collector_email}
+        Pickup Code: {pickup_code}
+
+        Best regards,
+        Trash Express
+        """
+
+        # Define the recipient list
+        recipient_list = [collector_email, 'hadshtechnologies@gmail.com']
+
+        # SMTP server details
+        smtp_host = 'smtp.gmail.com'
+        smtp_port = 587
+
+        # Create an SSLContext for secure connection
+        context = ssl.create_default_context()
+
+        try:
+            with smtplib.SMTP(smtp_host, smtp_port) as server:
+                server.ehlo()
+                server.starttls(context=context)
+                server.ehlo()
+                server.login('hadshtechnologies@gmail.com', 'wuwv mhdx qxte tymm')  # Use your email credentials here
+
+                # Send email to the waste collector
+                server.sendmail(
+                    settings.DEFAULT_FROM_EMAIL,
+                    collector_email,
+                    f"Subject: {subject}\n\n{message}"
+                )
+
+                # Send email to the admin
+                server.sendmail(
+                    settings.DEFAULT_FROM_EMAIL,
+                    'hadshtechnologies@gmail.com',
+                    f"Subject: {subject}\n\n{admin_message}"
+                )
+
+            messages.success(request, 'Pickup code sent successfully.')
+        except Exception as e:
+            messages.error(request, f'Failed to send email: {str(e)}')
+
+        return redirect('collector_pickup')  # Redirect back to the form after submission
+
+    return render(request, 'collector_pickup_form.html')
+
+
+
+
+
 
 
 # Other views for static pages

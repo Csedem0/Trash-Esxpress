@@ -28,5 +28,6 @@ urlpatterns = [
     path('password_reset_complete/', auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'), name='password_reset_complete'),
     # Add other URLs as needed
     path('send_mail_page/', views.send_mail_page, name='send_mail_page'),
-    path('payment/', views.payment, name='payment')
+    path('payment/', views.payment, name='payment'),
+    path('collector-pickup/', views.collector_pickup, name='collector_pickup'),
 ]

@@ -1,0 +1,40 @@
+<!-- templates/collector_pickup_form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste Collector Pickup Code</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Enter Your Email and Pickup Code</h2>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="pickup_code">Pickup Code:</label>
+                <input type="text" class="form-control" id="pickup_code" name="pickup_code" placeholder="Enter your pickup code" required>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submit-button">Send</button>
+        </form>
+        {% if message %}
+            <div class="alert alert-info mt-3">
+                {{ message }}
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.querySelector("form").addEventListener("submit", function(event) {
+            const submitButton = document.getElementById("submit-button");
+            submitButton.textContent = "Sent";
+            submitButton.disabled = true;
+        });
+    </script>
+</body>
+</html>
