@@ -30,4 +30,6 @@ urlpatterns = [
     path('send_mail_page/', views.send_mail_page, name='send_mail_page'),
     path('payment/', views.payment, name='payment'),
     path('collector-pickup/', views.collector_pickup, name='collector_pickup'),
+    path('flutterwave_redirect/', views.flutterwave_redirect, name='flutterwave_redirect'),
+    path('flutterwave_redirect_single/', views.flutterwave_redirect_single, name='flutterwave_redirect_single'),
 ]

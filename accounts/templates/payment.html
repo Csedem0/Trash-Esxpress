@@ -148,6 +148,14 @@
                     <div class="border-bottom py-4 mb-4">
                         <h4 class="text-primary mb-1">Choose Your Plan</h4>
                     </div>
+                    
+                    <!-- Display any alert messages, like cancellation warnings -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-warning">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                    
                     <form id="flutterwave-form" method="post" action="https://checkout.flutterwave.com/v3/hosted/pay">
                         {% csrf_token %}
                         <input type="hidden" name="public_key" value="FLWPUBK-1060c6f5ef9d48deb4cbacfa2b386bac-X">
@@ -174,8 +182,8 @@
                         <!-- Pass the selected plan to the subscription page -->
                         <input type="hidden" name="selected_plan" id="selected_plan" value="" />
                         
-                        <!-- Redirect to dashboard after payment -->
-                        <input type="hidden" name="redirect_url" value="https://trash-esxpress.onrender.com/accounts/subscribe/" />
+                        <!-- Redirect to custom Django view after payment -->
+                        <input type="hidden" name="redirect_url" value="https://trash-esxpress.onrender.com/accounts/flutterwave_redirect/" />
                         
                         <button type="submit" class="btn btn-primary py-2 px-4 mt-4" onclick="savePlanToLocalStorage()">Make Payment</button>
                     </form>
@@ -201,12 +209,10 @@
                             updateAmountAndPlan();
                         }
                     </script>
-                    
-                    
-                    
-                    
                 </div>
             </div>
+        </div>
+        
 
             
         </div>

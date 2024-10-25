@@ -36,6 +36,35 @@ from django.contrib.auth.decorators import login_required
 from .models import UserSubscription, SubscriptionPlan, UserProfile  # Assuming these are your models
 from django.conf import settings
 
+from django.shortcuts import redirect
+from django.contrib import messages
+
+def flutterwave_redirect(request):
+    # Get the transaction status from Flutterwave
+    status = request.GET.get('status')
+
+    if status == 'completed':
+        # Redirect to subscription confirmation page
+        return redirect('subscribe')
+    else:
+        # If canceled or failed, redirect back to payment page with a cancellation message
+        messages.warning(request, "Payment was canceled. Please try again.")
+        return redirect('payment')
+    
+
+def flutterwave_redirect_single(request):
+    # Get the transaction status from Flutterwave
+    status = request.GET.get('status')
+
+    if status == 'completed':
+        # Redirect to subscription confirmation page
+        return redirect('send_mail_page')
+    else:
+        # If canceled or failed, redirect back to payment page with a cancellation message
+        # messages.warning(request, "Payment was canceled. Please try again.")
+        return redirect('details')
+
+
 @login_required
 def subscribe(request):
     user = request.user
