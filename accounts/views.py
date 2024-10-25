@@ -87,13 +87,16 @@ def subscribe(request):
                 status='Active'
             )
 
-            # Generate pickup codes
+            # Generate pickup codes based on subscription plan
             main_pickup_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
-            dummy_codes = [''.join(random.choices(string.ascii_uppercase + string.digits, k=10)) for _ in range(3)]
+            if subscription.plan.name == "Basic":
+                dummy_codes = [''.join(random.choices(string.ascii_uppercase + string.digits, k=10)) for _ in range(3)]
+            else:
+                dummy_codes = [''.join(random.choices(string.ascii_uppercase + string.digits, k=10)) for _ in range(7)]
 
             # Store the pickup codes
             subscription.pickup_code = main_pickup_code
-            subscription.dummy_codes = dummy_codes  # You may need to adjust this field as per your model
+            subscription.dummy_codes = dummy_codes
             subscription.save()
 
             # Determine pickup days based on the subscription plan
@@ -183,6 +186,7 @@ def subscribe(request):
             messages.info(request, 'You currently have an active subscription. You can subscribe again if you wish to change your plan.')
 
         return render(request, 'subscribe.html')
+
 
 
 
@@ -339,11 +343,11 @@ def register(request):
     return render(request, 'registration/register.html', {'form': form})
 
 
-# Dashboard view (requires login)
 @login_required
 def dashboard(request):
     user = request.user
     today = timezone.now().date()
+    day_of_week = today.weekday()  # 0=Monday, 1=Tuesday, ..., 6=Sunday
 
     user_subscriptions = UserSubscription.objects.filter(user=user)
 
@@ -354,18 +358,19 @@ def dashboard(request):
             subscription.remaining_days = 0
             subscription.status = 'Expired'
 
-        # Check if dummy codes should be displayed based on the date
+        # Determine which codes to display based on the subscription plan and the day
         days_since_subscription = (today - subscription.start_date).days
-        if days_since_subscription < 7:
-            subscription.dummy_code_to_show = None  # Show no dummy codes yet
-        elif days_since_subscription < 14:
-            subscription.dummy_code_to_show = subscription.dummy_codes[0]  # Show the first dummy code
-        elif days_since_subscription < 21:
-            subscription.dummy_code_to_show = subscription.dummy_codes[1]  # Show the second dummy code
-        elif days_since_subscription < 28:
-            subscription.dummy_code_to_show = subscription.dummy_codes[2]  # Show the third dummy code
-        else:
-            subscription.dummy_code_to_show = None  # No dummy codes to show after 28 days
+        if subscription.plan.name == "Basic":
+            if day_of_week == 1:  # Tuesday
+                subscription.dummy_code_to_show = subscription.dummy_codes[days_since_subscription // 7 % 4]
+            else:
+                subscription.dummy_code_to_show = None
+        elif subscription.plan.name in ["Standard", "Premium"]:
+            if day_of_week == 1 or day_of_week == 3:  # Tuesday or Thursday
+                code_index = (days_since_subscription // 3) % 8
+                subscription.dummy_code_to_show = subscription.dummy_codes[code_index]
+            else:
+                subscription.dummy_code_to_show = None
         
         subscription.save()
 
